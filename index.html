@@ -1,0 +1,2576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodePath - Learn Web Development at Your Own Pace</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=JetBrains+Mono:wght@400;500&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0e1a;
+            --bg-secondary: #151b2e;
+            --bg-tertiary: #1e2740;
+            --accent-primary: #4dd0e1;
+            --accent-secondary: #26c6da;
+            --accent-warm: #ffb74d;
+            --text-primary: #e8eaf6;
+            --text-secondary: #b0bec5;
+            --text-muted: #78909c;
+            --success: #66bb6a;
+            --error: #ef5350;
+            --border: rgba(255, 255, 255, 0.1);
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Background effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, rgba(77, 208, 225, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+            animation: float 20s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(5deg); }
+            66% { transform: translate(-20px, 20px) rotate(-5deg); }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hide/Show Pages */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Header */
+        header {
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border);
+            background: rgba(10, 14, 26, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            cursor: pointer;
+        }
+
+        .logo span {
+            color: var(--accent-warm);
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-primary);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            font-size: 0.95rem;
+            border: none;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+            color: var(--bg-primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(77, 208, 225, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-secondary);
+            border-color: var(--accent-primary);
+        }
+
+        .user-menu {
+            position: relative;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-warm));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(77, 208, 225, 0.4);
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            min-width: 200px;
+            display: none;
+            box-shadow: 0 8px 24px var(--shadow);
+        }
+
+        .dropdown.show {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dropdown-item {
+            padding: 0.75rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: block;
+            border-radius: 6px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .dropdown-item:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .user-progress {
+            background: var(--bg-tertiary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .progress-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Landing Page */
+        .hero {
+            padding: 8rem 0;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .features {
+            padding: 6rem 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(30, 39, 64, 0.3) 100%);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-primary);
+            box-shadow: 0 12px 24px var(--shadow);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .feature-description {
+            color: var(--text-secondary);
+        }
+
+        /* Auth Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 3rem;
+            max-width: 450px;
+            width: 90%;
+            position: relative;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: var(--text-primary);
+        }
+
+        .modal-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-family: 'DM Sans', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(77, 208, 225, 0.1);
+        }
+
+        .form-error {
+            color: var(--error);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .form-error.show {
+            display: block;
+        }
+
+        .btn-full {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1rem;
+        }
+
+        .modal-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .modal-footer a {
+            color: var(--accent-primary);
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .modal-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Profile Page */
+        .profile-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 0;
+        }
+
+        .profile-header {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-warm));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .profile-info h1 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .profile-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-bar-container {
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            height: 12px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 8px;
+            transition: width 0.5s ease-out;
+        }
+
+        .course-progress-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .course-progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Learning Dashboard */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 3rem;
+            padding: 3rem 0;
+            min-height: calc(100vh - 100px);
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+            max-height: calc(100vh - 150px);
+            overflow-y: auto;
+            padding-right: 1rem;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+            border-radius: 10px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: var(--accent-primary);
+            border-radius: 10px;
+        }
+
+        .course-nav h2 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .unit {
+            margin-bottom: 2rem;
+            animation: slideIn 0.5s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .unit:nth-child(1) { animation-delay: 0.1s; transform: translateX(-20px); }
+        .unit:nth-child(2) { animation-delay: 0.2s; transform: translateX(-20px); }
+        .unit:nth-child(3) { animation-delay: 0.3s; transform: translateX(-20px); }
+
+        .unit-title {
+            font-weight: 700;
+            color: var(--accent-warm);
+            margin-bottom: 0.75rem;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .unit-number {
+            background: var(--bg-tertiary);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
+
+        .lesson-list {
+            list-style: none;
+        }
+
+        .lesson-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .lesson-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+
+        .lesson-link:hover {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border-color: var(--border);
+            transform: translateX(5px);
+        }
+
+        .lesson-link.active {
+            background: var(--bg-tertiary);
+            color: var(--accent-primary);
+            border-color: var(--accent-primary);
+            font-weight: 500;
+        }
+
+        .lesson-status {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            flex-shrink: 0;
+        }
+
+        .lesson-link.completed .lesson-status {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+
+        .content {
+            max-width: 800px;
+        }
+
+        .lesson-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .lesson-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .lesson-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .lesson-description {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .article-content {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        .article-content h2 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 2rem;
+            color: var(--text-primary);
+            margin: 2.5rem 0 1.5rem;
+            font-weight: 600;
+        }
+
+        .article-content h3 {
+            font-size: 1.4rem;
+            color: var(--text-primary);
+            margin: 2rem 0 1rem;
+            font-weight: 600;
+        }
+
+        .article-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .article-content ul, .article-content ol {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+
+        .article-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        .article-content strong {
+            color: var(--accent-warm);
+            font-weight: 600;
+        }
+
+        .code-block {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin: 2rem 0;
+            overflow: hidden;
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1.25rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .code-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .copy-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .copy-btn:hover {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            border-color: var(--accent-primary);
+        }
+
+        pre {
+            padding: 1.5rem 1.25rem;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        pre code {
+            color: var(--text-primary);
+        }
+
+        .code-comment {
+            color: var(--text-muted);
+        }
+
+        .code-tag {
+            color: var(--accent-primary);
+        }
+
+        .code-attr {
+            color: var(--accent-warm);
+        }
+
+        .code-value {
+            color: #c3e88d;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, rgba(77, 208, 225, 0.1) 0%, rgba(38, 198, 218, 0.05) 100%);
+            border-left: 4px solid var(--accent-primary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        .info-box-title {
+            font-weight: 600;
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .try-it {
+            background: var(--bg-secondary);
+            border: 2px dashed var(--accent-warm);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .try-it-title {
+            font-weight: 700;
+            color: var(--accent-warm);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .lesson-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--border);
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 1.25rem 2rem;
+            border: 1px solid var(--border);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            font-family: 'DM Sans', sans-serif;
+            cursor: pointer;
+        }
+
+        .nav-btn:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--shadow);
+        }
+
+        .nav-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-title {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .nav-btn.complete {
+            background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+            border: none;
+            color: var(--bg-primary);
+            font-weight: 600;
+        }
+
+        .nav-btn.complete:hover {
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: relative;
+                top: 0;
+                max-height: none;
+            }
+
+            .lesson-title {
+                font-size: 2rem;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-stats {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .lesson-nav {
+                flex-direction: column;
+            }
+
+            .hero {
+                padding: 4rem 0;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            nav {
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo" onclick="showPage('landing')">Code<span>Path</span></div>
+                <nav id="main-nav">
+                    <!-- Dynamic content -->
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Landing Page -->
+    <div id="landing-page" class="page active">
+        <div class="hero">
+            <div class="container">
+                <h1 class="hero-title">Learn Web Development<br>at Your Own Pace</h1>
+                <p class="hero-subtitle">
+                    Master HTML, CSS, and JavaScript through interactive tutorials and hands-on projects. Start your coding journey today.
+                </p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="showModal('signup')">Get Started Free</button>
+                    <button class="btn btn-secondary" onclick="showModal('login')">Sign In</button>
+                </div>
+            </div>
+        </div>
+
+        <section class="features">
+            <div class="container">
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">📚</div>
+                        <h3 class="feature-title">Structured Learning</h3>
+                        <p class="feature-description">Follow a carefully designed curriculum that takes you from beginner to confident developer.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3 class="feature-title">Learn by Doing</h3>
+                        <p class="feature-description">Practice with real code examples and interactive exercises in every lesson.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <h3 class="feature-title">Track Progress</h3>
+                        <p class="feature-description">Monitor your learning journey with detailed progress tracking and achievements.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🚀</div>
+                        <h3 class="feature-title">Self-Paced</h3>
+                        <p class="feature-description">Learn on your schedule. No deadlines, no pressure. Go as fast or slow as you need.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💡</div>
+                        <h3 class="feature-title">Best Practices</h3>
+                        <p class="feature-description">Learn industry-standard coding practices and modern development techniques.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🌟</div>
+                        <h3 class="feature-title">Free Forever</h3>
+                        <p class="feature-description">All courses and features are completely free. No hidden costs, no premium tiers.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Profile Page -->
+    <div id="profile-page" class="page">
+        <div class="container">
+            <div class="profile-container">
+                <div class="profile-header">
+                    <div class="profile-avatar" id="profile-avatar">U</div>
+                    <div class="profile-info">
+                        <h1 id="profile-name">User</h1>
+                        <p id="profile-email" style="color: var(--text-muted);"></p>
+                        <div class="profile-stats">
+                            <div class="stat">
+                                <div class="stat-value" id="lessons-completed">0</div>
+                                <div class="stat-label">Lessons Completed</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value" id="total-lessons">25</div>
+                                <div class="stat-label">Total Lessons</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value" id="progress-percentage">0%</div>
+                                <div class="stat-label">Progress</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-section">
+                    <h2 class="section-title">Course Progress</h2>
+                    <div class="course-progress-item">
+                        <div class="course-progress-header">
+                            <span style="font-weight: 600;">HTML Fundamentals</span>
+                            <span style="color: var(--text-muted);" id="html-progress-text">0/5 lessons</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" id="html-progress-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="course-progress-item">
+                        <div class="course-progress-header">
+                            <span style="font-weight: 600;">CSS Basics</span>
+                            <span style="color: var(--text-muted);" id="css-progress-text">0/4 lessons</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" id="css-progress-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="course-progress-item">
+                        <div class="course-progress-header">
+                            <span style="font-weight: 600;">CSS Layout</span>
+                            <span style="color: var(--text-muted);" id="layout-progress-text">0/3 lessons</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" id="layout-progress-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-section">
+                    <h2 class="section-title">Account Settings</h2>
+                    <div class="form-group">
+                        <label class="form-label">Display Name</label>
+                        <input type="text" class="form-input" id="settings-name" placeholder="Your name">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" id="settings-email" placeholder="your@email.com" disabled>
+                    </div>
+                    <button class="btn btn-primary" onclick="updateProfile()">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Learning Page -->
+    <div id="learning-page" class="page">
+        <div class="container">
+            <div class="main-layout">
+                <aside class="sidebar">
+                    <nav class="course-nav">
+                        <h2>Web Development</h2>
+                        
+                        <div class="unit">
+                            <div class="unit-title">
+                                <span class="unit-number">Unit 1</span>
+                                HTML Fundamentals
+                            </div>
+                            <ul class="lesson-list" id="html-lessons">
+                                <!-- Dynamic content -->
+                            </ul>
+                        </div>
+
+                        <div class="unit">
+                            <div class="unit-title">
+                                <span class="unit-number">Unit 2</span>
+                                CSS Basics
+                            </div>
+                            <ul class="lesson-list" id="css-lessons">
+                                <!-- Dynamic content -->
+                            </ul>
+                        </div>
+
+                        <div class="unit">
+                            <div class="unit-title">
+                                <span class="unit-number">Unit 3</span>
+                                CSS Layout
+                            </div>
+                            <ul class="lesson-list" id="layout-lessons">
+                                <!-- Dynamic content -->
+                            </ul>
+                        </div>
+                    </nav>
+                </aside>
+
+                <main class="content">
+                    <article id="lesson-content">
+                        <!-- Dynamic lesson content -->
+                    </article>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modals -->
+    <div class="modal-overlay" id="modal-overlay">
+        <!-- Login Modal -->
+        <div class="modal" id="login-modal" style="display: none;">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <h2 class="modal-title">Welcome Back</h2>
+            <p class="modal-subtitle">Sign in to continue your learning journey</p>
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" id="login-email" placeholder="your@email.com" required>
+                    <div class="form-error" id="login-email-error"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" id="login-password" placeholder="••••••••" required>
+                    <div class="form-error" id="login-password-error"></div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Sign In</button>
+            </form>
+            <div class="modal-footer">
+                Don't have an account? <a onclick="switchModal('signup')">Sign up</a>
+            </div>
+        </div>
+
+        <!-- Signup Modal -->
+        <div class="modal" id="signup-modal" style="display: none;">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <h2 class="modal-title">Start Learning Today</h2>
+            <p class="modal-subtitle">Create your free account</p>
+            <form onsubmit="handleSignup(event)">
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-input" id="signup-name" placeholder="John Doe" required>
+                    <div class="form-error" id="signup-name-error"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" id="signup-email" placeholder="your@email.com" required>
+                    <div class="form-error" id="signup-email-error"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" id="signup-password" placeholder="••••••••" required minlength="6">
+                    <div class="form-error" id="signup-password-error"></div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Create Account</button>
+            </form>
+            <div class="modal-footer">
+                Already have an account? <a onclick="switchModal('login')">Sign in</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data Structure
+        const lessons = {
+            html: [
+                { id: 'html-1', title: 'Introduction to HTML', completed: false },
+                { id: 'html-2', title: 'HTML Document Structure', completed: false },
+                { id: 'html-3', title: 'Text Elements & Formatting', completed: false },
+                { id: 'html-4', title: 'Links & Navigation', completed: false },
+                { id: 'html-5', title: 'Images & Media', completed: false }
+            ],
+            css: [
+                { id: 'css-1', title: 'Introduction to CSS', completed: false },
+                { id: 'css-2', title: 'Selectors & Properties', completed: false },
+                { id: 'css-3', title: 'Colors & Backgrounds', completed: false },
+                { id: 'css-4', title: 'Box Model', completed: false }
+            ],
+            layout: [
+                { id: 'layout-1', title: 'Flexbox Fundamentals', completed: false },
+                { id: 'layout-2', title: 'CSS Grid Basics', completed: false },
+                { id: 'layout-3', title: 'Responsive Design', completed: false }
+            ]
+        };
+
+        let currentUser = null;
+        let currentLesson = null;
+
+        // Initialize app
+        function init() {
+            loadUserData();
+            updateNav();
+            
+            if (currentUser) {
+                showPage('learning');
+            }
+        }
+
+        // User Data Management
+        function loadUserData() {
+            const userData = localStorage.getItem('codepath_user');
+            if (userData) {
+                currentUser = JSON.parse(userData);
+                loadProgress();
+            }
+        }
+
+        function saveUserData() {
+            localStorage.setItem('codepath_user', JSON.stringify(currentUser));
+            saveProgress();
+        }
+
+        function loadProgress() {
+            const progress = localStorage.getItem('codepath_progress');
+            if (progress) {
+                const savedLessons = JSON.parse(progress);
+                Object.keys(lessons).forEach(unit => {
+                    lessons[unit].forEach((lesson, idx) => {
+                        if (savedLessons[unit] && savedLessons[unit][idx]) {
+                            lesson.completed = savedLessons[unit][idx].completed;
+                        }
+                    });
+                });
+            }
+        }
+
+        function saveProgress() {
+            localStorage.setItem('codepath_progress', JSON.stringify(lessons));
+        }
+
+        // Auth Functions
+        function showModal(type) {
+            document.getElementById('modal-overlay').classList.add('show');
+            document.getElementById('login-modal').style.display = type === 'login' ? 'block' : 'none';
+            document.getElementById('signup-modal').style.display = type === 'signup' ? 'block' : 'none';
+        }
+
+        function closeModal() {
+            document.getElementById('modal-overlay').classList.remove('show');
+        }
+
+        function switchModal(type) {
+            showModal(type);
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            // Check if user exists
+            const users = JSON.parse(localStorage.getItem('codepath_users') || '[]');
+            const user = users.find(u => u.email === email && u.password === password);
+
+            if (user) {
+                currentUser = user;
+                saveUserData();
+                closeModal();
+                showPage('learning');
+                updateNav();
+            } else {
+                document.getElementById('login-password-error').textContent = 'Invalid email or password';
+                document.getElementById('login-password-error').classList.add('show');
+            }
+        }
+
+        function handleSignup(e) {
+            e.preventDefault();
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+
+            // Check if user already exists
+            const users = JSON.parse(localStorage.getItem('codepath_users') || '[]');
+            if (users.find(u => u.email === email)) {
+                document.getElementById('signup-email-error').textContent = 'Email already registered';
+                document.getElementById('signup-email-error').classList.add('show');
+                return;
+            }
+
+            // Create new user
+            const newUser = { name, email, password, joinedDate: new Date().toISOString() };
+            users.push(newUser);
+            localStorage.setItem('codepath_users', JSON.stringify(users));
+
+            currentUser = newUser;
+            saveUserData();
+            closeModal();
+            showPage('learning');
+            updateNav();
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('codepath_user');
+            showPage('landing');
+            updateNav();
+            closeDropdown();
+        }
+
+        // Navigation
+        function updateNav() {
+            const nav = document.getElementById('main-nav');
+            
+            if (currentUser) {
+                nav.innerHTML = `
+                    <span class="nav-link" onclick="showPage('learning')">Courses</span>
+                    <div class="user-progress">
+                        <div class="progress-dot"></div>
+                        <span id="nav-progress">${getCompletedCount()}/${getTotalCount()} Lessons</span>
+                    </div>
+                    <div class="user-menu">
+                        <div class="user-avatar" onclick="toggleDropdown()">${currentUser.name.charAt(0).toUpperCase()}</div>
+                        <div class="dropdown" id="user-dropdown">
+                            <a class="dropdown-item" onclick="showPage('profile')">Profile</a>
+                            <a class="dropdown-item" onclick="showPage('learning')">My Courses</a>
+                            <a class="dropdown-item" onclick="logout()">Sign Out</a>
+                        </div>
+                    </div>
+                `;
+            } else {
+                nav.innerHTML = `
+                    <button class="btn btn-secondary" onclick="showModal('login')">Sign In</button>
+                    <button class="btn btn-primary" onclick="showModal('signup')">Get Started</button>
+                `;
+            }
+        }
+
+        function toggleDropdown() {
+            document.getElementById('user-dropdown').classList.toggle('show');
+        }
+
+        function closeDropdown() {
+            const dropdown = document.getElementById('user-dropdown');
+            if (dropdown) {
+                dropdown.classList.remove('show');
+            }
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.user-menu')) {
+                closeDropdown();
+            }
+        });
+
+        // Page Management
+        function showPage(pageName) {
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.getElementById(`${pageName}-page`).classList.add('active');
+            
+            if (pageName === 'learning') {
+                renderLearningPage();
+            } else if (pageName === 'profile') {
+                renderProfilePage();
+            }
+        }
+
+        // Render Learning Page
+        function renderLearningPage() {
+            renderLessonList('html', 'html-lessons');
+            renderLessonList('css', 'css-lessons');
+            renderLessonList('layout', 'layout-lessons');
+            
+            // Load first incomplete lesson or first lesson
+            const firstIncomplete = findFirstIncompleteLesson();
+            if (firstIncomplete) {
+                loadLesson(firstIncomplete.unit, firstIncomplete.index);
+            } else {
+                loadLesson('html', 0);
+            }
+        }
+
+        function renderLessonList(unit, elementId) {
+            const container = document.getElementById(elementId);
+            container.innerHTML = lessons[unit].map((lesson, idx) => `
+                <li class="lesson-item">
+                    <a class="lesson-link ${lesson.completed ? 'completed' : ''}" onclick="loadLesson('${unit}', ${idx})">
+                        <span class="lesson-status">${lesson.completed ? '✓' : ''}</span>
+                        <span>${lesson.title}</span>
+                    </a>
+                </li>
+            `).join('');
+        }
+
+        function findFirstIncompleteLesson() {
+            for (const unit of Object.keys(lessons)) {
+                const idx = lessons[unit].findIndex(l => !l.completed);
+                if (idx !== -1) {
+                    return { unit, index: idx };
+                }
+            }
+            return null;
+        }
+
+        function loadLesson(unit, index) {
+            currentLesson = { unit, index };
+            
+            // Update active state
+            document.querySelectorAll('.lesson-link').forEach(link => link.classList.remove('active'));
+            const links = document.getElementById(`${unit}-lessons`).querySelectorAll('.lesson-link');
+            if (links[index]) {
+                links[index].classList.add('active');
+            }
+
+            // Render lesson content
+            const lesson = lessons[unit][index];
+            const content = document.getElementById('lesson-content');
+            
+            content.innerHTML = `
+                <div class="lesson-header">
+                    <div class="lesson-meta">
+                        <div class="meta-item">
+                            <span>📚</span>
+                            <span>${getUnitName(unit)}</span>
+                        </div>
+                        <div class="meta-item">
+                            <span>⏱️</span>
+                            <span>15 min read</span>
+                        </div>
+                        <div class="meta-item">
+                            <span>📝</span>
+                            <span>Lesson ${index + 1} of ${lessons[unit].length}</span>
+                        </div>
+                    </div>
+                    <h1 class="lesson-title">${lesson.title}</h1>
+                    <p class="lesson-description">
+                        ${getLessonDescription(lesson.id)}
+                    </p>
+                </div>
+
+                <div class="article-content">
+                    ${getLessonContent(lesson.id)}
+                </div>
+
+                <div class="lesson-nav">
+                    ${index > 0 ? `
+                        <button class="nav-btn" onclick="loadLesson('${unit}', ${index - 1})">
+                            <span class="nav-label">← Previous</span>
+                            <span class="nav-title">${lessons[unit][index - 1].title}</span>
+                        </button>
+                    ` : '<div></div>'}
+                    
+                    <button class="nav-btn complete" onclick="completeLesson()">
+                        <span class="nav-label">Complete & Continue →</span>
+                        <span class="nav-title">${getNextLessonTitle(unit, index)}</span>
+                    </button>
+                </div>
+            `;
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function getUnitName(unit) {
+            const names = {
+                html: 'Unit 1: HTML Fundamentals',
+                css: 'Unit 2: CSS Basics',
+                layout: 'Unit 3: CSS Layout'
+            };
+            return names[unit];
+        }
+
+        function getLessonDescription(id) {
+            const descriptions = {
+                'html-1': 'Discover what HTML is, why it matters, and how it forms the backbone of every website.',
+                'html-2': 'Learn about the essential structure of an HTML document and the purpose of each section.',
+                'html-3': 'Master headings, paragraphs, emphasis, and more to structure your text content.',
+                'html-4': 'Create hyperlinks to navigate between pages and sections of your website.',
+                'html-5': 'Add images, videos, and other media to make your pages visually engaging.',
+                'css-1': 'Introduction to Cascading Style Sheets and how they transform HTML into beautiful designs.',
+                'css-2': 'Learn how to target HTML elements and apply styles using CSS selectors.',
+                'css-3': 'Explore the world of colors, gradients, and background styling in CSS.',
+                'css-4': 'Understand the box model concept and how spacing works in CSS.',
+                'layout-1': 'Master Flexbox for creating flexible, responsive layouts with ease.',
+                'layout-2': 'Learn CSS Grid for complex two-dimensional layouts.',
+                'layout-3': 'Make your websites look great on all devices with responsive design techniques.'
+            };
+            return descriptions[id] || 'Learn essential web development concepts.';
+        }
+
+        function getLessonContent(id) {
+            const lessons = {
+                'html-1': `
+                    <h2>What is HTML?</h2>
+                    <p>HTML stands for <strong>HyperText Markup Language</strong>. It's the standard language used to create web pages. Think of HTML as the skeleton of a website—it provides the structure and content, while CSS adds styling and JavaScript adds interactivity.</p>
+
+                    <h3>Why Learn HTML?</h3>
+                    <ul>
+                        <li>It's the foundation of all web development</li>
+                        <li>Every website you visit uses HTML</li>
+                        <li>It's beginner-friendly and easy to learn</li>
+                        <li>Essential for web designers, developers, and content creators</li>
+                    </ul>
+
+                    <h2>How HTML Works</h2>
+                    <p>HTML uses <strong>tags</strong> to mark up content. Tags are keywords surrounded by angle brackets. Most tags come in pairs: an opening tag and a closing tag.</p>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">HTML</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">&lt;p&gt;</span>This is a paragraph.<span class="code-tag">&lt;/p&gt;</span>
+
+<span class="code-comment">&lt;!-- Opening tag: &lt;p&gt; --&gt;</span>
+<span class="code-comment">&lt;!-- Content: This is a paragraph. --&gt;</span>
+<span class="code-comment">&lt;!-- Closing tag: &lt;/p&gt; --&gt;</span></code></pre>
+                    </div>
+
+                    <div class="info-box">
+                        <div class="info-box-title">💡 Key Concept</div>
+                        <p>Tags tell the browser how to display content. The <strong>&lt;p&gt;</strong> tag means "this is a paragraph," so the browser knows to display it as a block of text with spacing above and below.</p>
+                    </div>
+
+                    <h2>Your First HTML Example</h2>
+                    <p>Let's look at a simple HTML example:</p>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">HTML</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">&lt;h1&gt;</span>Welcome to My Website<span class="code-tag">&lt;/h1&gt;</span>
+<span class="code-tag">&lt;p&gt;</span>This is my first paragraph.<span class="code-tag">&lt;/p&gt;</span>
+<span class="code-tag">&lt;p&gt;</span>HTML is <span class="code-tag">&lt;strong&gt;</span>amazing<span class="code-tag">&lt;/strong&gt;</span>!<span class="code-tag">&lt;/p&gt;</span></code></pre>
+                    </div>
+
+                    <h3>Common HTML Tags</h3>
+                    <ul>
+                        <li><strong>&lt;h1&gt; to &lt;h6&gt;</strong> - Headings (h1 is largest, h6 is smallest)</li>
+                        <li><strong>&lt;p&gt;</strong> - Paragraph</li>
+                        <li><strong>&lt;strong&gt;</strong> - Important text (bold)</li>
+                        <li><strong>&lt;em&gt;</strong> - Emphasized text (italic)</li>
+                        <li><strong>&lt;br&gt;</strong> - Line break</li>
+                    </ul>
+
+                    <div class="try-it">
+                        <div class="try-it-title">🎯 Exercise: Create Your First HTML</div>
+                        <p>Open a text editor (Notepad, TextEdit, or VS Code) and create a file called <strong>index.html</strong>. Write HTML that includes:</p>
+                        <ol>
+                            <li>A main heading with your name</li>
+                            <li>A paragraph introducing yourself</li>
+                            <li>Another paragraph with some <strong>bold</strong> and <em>italic</em> text</li>
+                        </ol>
+                        <p>Save the file and open it in your web browser to see your first webpage!</p>
+                    </div>
+                `,
+
+                'html-2': `
+                    <h2>The HTML Document Structure</h2>
+                    <p>Every HTML document follows a standard structure. Understanding this structure is crucial because it tells the browser how to properly display your webpage.</p>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">HTML</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">&lt;!DOCTYPE html&gt;</span>
+<span class="code-tag">&lt;html</span> <span class="code-attr">lang</span>=<span class="code-value">"en"</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;head&gt;</span>
+    <span class="code-tag">&lt;meta</span> <span class="code-attr">charset</span>=<span class="code-value">"UTF-8"</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;meta</span> <span class="code-attr">name</span>=<span class="code-value">"viewport"</span> <span class="code-attr">content</span>=<span class="code-value">"width=device-width, initial-scale=1.0"</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;title&gt;</span>My First Webpage<span class="code-tag">&lt;/title&gt;</span>
+<span class="code-tag">&lt;/head&gt;</span>
+<span class="code-tag">&lt;body&gt;</span>
+    <span class="code-tag">&lt;h1&gt;</span>Hello World!<span class="code-tag">&lt;/h1&gt;</span>
+    <span class="code-tag">&lt;p&gt;</span>This is the visible content.<span class="code-tag">&lt;/p&gt;</span>
+<span class="code-tag">&lt;/body&gt;</span>
+<span class="code-tag">&lt;/html&gt;</span></code></pre>
+                    </div>
+
+                    <h2>Breaking Down the Structure</h2>
+
+                    <h3>1. DOCTYPE Declaration</h3>
+                    <p>The <strong>&lt;!DOCTYPE html&gt;</strong> tells the browser this is an HTML5 document. Always put this at the very top of your HTML file.</p>
+
+                    <h3>2. HTML Element</h3>
+                    <p>The <strong>&lt;html&gt;</strong> element is the root element that contains all other elements. The <strong>lang="en"</strong> attribute specifies the language (English).</p>
+
+                    <h3>3. Head Section</h3>
+                    <p>The <strong>&lt;head&gt;</strong> contains metadata—information about the document that isn't displayed on the page:</p>
+                    <ul>
+                        <li><strong>&lt;meta charset="UTF-8"&gt;</strong> - Sets character encoding for proper text display</li>
+                        <li><strong>&lt;meta name="viewport"...&gt;</strong> - Makes the page responsive on mobile devices</li>
+                        <li><strong>&lt;title&gt;</strong> - Sets the page title shown in browser tabs</li>
+                    </ul>
+
+                    <h3>4. Body Section</h3>
+                    <p>The <strong>&lt;body&gt;</strong> contains all visible content—everything users see and interact with on your webpage.</p>
+
+                    <div class="info-box">
+                        <div class="info-box-title">💡 Remember</div>
+                        <p>Think of it like a document: the <strong>head</strong> is like the document properties (title, author), while the <strong>body</strong> is the actual content you read.</p>
+                    </div>
+
+                    <div class="try-it">
+                        <div class="try-it-title">🎯 Exercise: Build a Complete HTML Document</div>
+                        <p>Create a complete HTML document with proper structure:</p>
+                        <ol>
+                            <li>Start with &lt;!DOCTYPE html&gt;</li>
+                            <li>Add the &lt;html&gt;, &lt;head&gt;, and &lt;body&gt; elements</li>
+                            <li>In the head: add a title "About Me"</li>
+                            <li>In the body: add a heading and 2-3 paragraphs about yourself</li>
+                            <li>Save as "about.html" and open in your browser</li>
+                        </ol>
+                    </div>
+                `,
+
+                'html-3': `
+                    <h2>Understanding Text Structure</h2>
+                    <p>HTML provides a rich set of elements for marking up text content. Using the right element for the job isn't just about how things look—it's about meaning and structure.</p>
+
+                    <h3>Headings: Creating Hierarchy</h3>
+                    <p>Headings define the structure of your content. HTML offers six levels of headings, from <strong>h1</strong> (most important) to <strong>h6</strong> (least important).</p>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">HTML</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">&lt;h1&gt;</span>Main Page Title<span class="code-tag">&lt;/h1&gt;</span>
+<span class="code-tag">&lt;h2&gt;</span>Section Heading<span class="code-tag">&lt;/h2&gt;</span>
+<span class="code-tag">&lt;h3&gt;</span>Subsection Heading<span class="code-tag">&lt;/h3&gt;</span></code></pre>
+                    </div>
+
+                    <div class="info-box">
+                        <div class="info-box-title">💡 Best Practice</div>
+                        <p>Use only one <strong>h1</strong> per page. Don't skip heading levels—go from h2 to h3, not h2 to h4.</p>
+                    </div>
+
+                    <h3>Emphasizing Text</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">HTML</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">&lt;p&gt;</span>This is <span class="code-tag">&lt;strong&gt;</span>really important<span class="code-tag">&lt;/strong&gt;</span> information.<span class="code-tag">&lt;/p&gt;</span>
+<span class="code-tag">&lt;p&gt;</span>I <span class="code-tag">&lt;em&gt;</span>cannot believe<span class="code-tag">&lt;/em&gt;</span> how easy this is!<span class="code-tag">&lt;/p&gt;</span></code></pre>
+                    </div>
+
+                    <h3>Lists</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">HTML</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">&lt;ul&gt;</span>
+    <span class="code-tag">&lt;li&gt;</span>First item<span class="code-tag">&lt;/li&gt;</span>
+    <span class="code-tag">&lt;li&gt;</span>Second item<span class="code-tag">&lt;/li&gt;</span>
+<span class="code-tag">&lt;/ul&gt;</span>
+
+<span class="code-tag">&lt;ol&gt;</span>
+    <span class="code-tag">&lt;li&gt;</span>First step<span class="code-tag">&lt;/li&gt;</span>
+    <span class="code-tag">&lt;li&gt;</span>Second step<span class="code-tag">&lt;/li&gt;</span>
+<span class="code-tag">&lt;/ol&gt;</span></code></pre>
+                    </div>
+
+                    <div class="try-it">
+                        <div class="try-it-title">🎯 Exercise: Create a Blog Post</div>
+                        <p>Create an HTML page with a blog post structure:</p>
+                        <ol>
+                            <li>Add an h1 for the article title</li>
+                            <li>Add two h2 sections with paragraphs</li>
+                            <li>Create an unordered list of 3-5 items</li>
+                            <li>Use &lt;strong&gt; and &lt;em&gt; to emphasize text</li>
+                        </ol>
+                    </div>
+                `,
+
+                'html-4': `
+                    <h2>Creating Links in HTML</h2>
+                    <p>Links connect pages together. The anchor element <strong>&lt;a&gt;</strong> creates clickable links.</p>
+
+                    <h3>Basic Link Syntax</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">HTML</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">&lt;a</span> <span class="code-attr">href</span>=<span class="code-value">"https://www.example.com"</span><span class="code-tag">&gt;</span>Click here<span class="code-tag">&lt;/a&gt;</span></code></pre>
+                    </div>
+
+                    <h3>Types of Links</h3>
+                    <p><strong>External Links:</strong></p>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">HTML</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">&lt;a</span> <span class="code-attr">href</span>=<span class="code-value">"https://www.google.com"</span><span class="code-tag">&gt;</span>Visit Google<span class="code-tag">&lt;/a&gt;</span></code></pre>
+                    </div>
+
+                    <p><strong>Internal Links:</strong></p>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">HTML</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">&lt;a</span> <span class="code-attr">href</span>=<span class="code-value">"about.html"</span><span class="code-tag">&gt;</span>About Us<span class="code-tag">&lt;/a&gt;</span></code></pre>
+                    </div>
+
+                    <p><strong>Email Links:</strong></p>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">HTML</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">&lt;a</span> <span class="code-attr">href</span>=<span class="code-value">"mailto:hello@example.com"</span><span class="code-tag">&gt;</span>Email Us<span class="code-tag">&lt;/a&gt;</span></code></pre>
+                    </div>
+
+                    <div class="info-box">
+                        <div class="info-box-title">💡 Best Practice</div>
+                        <p>Make link text descriptive! Instead of "click here", use "view our pricing page".</p>
+                    </div>
+
+                    <h3>Opening in New Tab</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">HTML</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">&lt;a</span> <span class="code-attr">href</span>=<span class="code-value">"https://example.com"</span> <span class="code-attr">target</span>=<span class="code-value">"_blank"</span><span class="code-tag">&gt;</span>Open in new tab<span class="code-tag">&lt;/a&gt;</span></code></pre>
+                    </div>
+
+                    <div class="try-it">
+                        <div class="try-it-title">🎯 Exercise: Build a Multi-Page Site</div>
+                        <p>Create a simple website with multiple linked pages:</p>
+                        <ol>
+                            <li>Create three HTML files: index.html, about.html, and contact.html</li>
+                            <li>Add a navigation menu on each page linking to all three</li>
+                            <li>Add an email link on the contact page</li>
+                            <li>Add external links to your favorite websites</li>
+                        </ol>
+                    </div>
+                `,
+
+                'html-5': `
+                    <h2>Adding Images to Your Website</h2>
+                    <p>Images make websites more engaging. The <strong>&lt;img&gt;</strong> tag embeds images in HTML.</p>
+
+                    <h3>Basic Image Syntax</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">HTML</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">&lt;img</span> <span class="code-attr">src</span>=<span class="code-value">"photo.jpg"</span> <span class="code-attr">alt</span>=<span class="code-value">"A beautiful sunset"</span><span class="code-tag">&gt;</span></code></pre>
+                    </div>
+
+                    <div class="info-box">
+                        <div class="info-box-title">💡 Always Use Alt Text!</div>
+                        <p>The <strong>alt</strong> attribute is crucial for accessibility. Screen readers use it to describe images to visually impaired users.</p>
+                    </div>
+
+                    <h3>Image Attributes</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">HTML</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">&lt;img</span> <span class="code-attr">src</span>=<span class="code-value">"photo.jpg"</span> 
+     <span class="code-attr">alt</span>=<span class="code-value">"Landscape"</span> 
+     <span class="code-attr">width</span>=<span class="code-value">"600"</span> 
+     <span class="code-attr">height</span>=<span class="code-value">"400"</span><span class="code-tag">&gt;</span></code></pre>
+                    </div>
+
+                    <h3>Clickable Images</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">HTML</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">&lt;a</span> <span class="code-attr">href</span>=<span class="code-value">"portfolio.html"</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;img</span> <span class="code-attr">src</span>=<span class="code-value">"thumbnail.jpg"</span> <span class="code-attr">alt</span>=<span class="code-value">"View portfolio"</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;/a&gt;</span></code></pre>
+                    </div>
+
+                    <h3>Figures and Captions</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">HTML</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">&lt;figure&gt;</span>
+    <span class="code-tag">&lt;img</span> <span class="code-attr">src</span>=<span class="code-value">"sunset.jpg"</span> <span class="code-attr">alt</span>=<span class="code-value">"Sunset over ocean"</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;figcaption&gt;</span>Sunset at Malibu Beach, 2024<span class="code-tag">&lt;/figcaption&gt;</span>
+<span class="code-tag">&lt;/figure&gt;</span></code></pre>
+                    </div>
+
+                    <div class="try-it">
+                        <div class="try-it-title">🎯 Exercise: Create a Photo Gallery</div>
+                        <p>Build a simple photo gallery page:</p>
+                        <ol>
+                            <li>Create "gallery.html"</li>
+                            <li>Add 4-6 images using https://picsum.photos/300/200</li>
+                            <li>Use &lt;figure&gt; and &lt;figcaption&gt; for each</li>
+                            <li>Make 2-3 images clickable links</li>
+                            <li>Write descriptive alt text for each image</li>
+                        </ol>
+                    </div>
+                `,
+
+                'css-1': `
+                    <h2>What is CSS?</h2>
+                    <p>CSS stands for <strong>Cascading Style Sheets</strong>. While HTML provides structure, CSS controls how that content looks—colors, fonts, spacing, layout, and more.</p>
+
+                    <h3>How CSS Works</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">CSS</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">h1</span> {
+    <span class="code-attr">color</span>: <span class="code-value">blue</span>;
+    <span class="code-attr">font-size</span>: <span class="code-value">32px</span>;
+}</code></pre>
+                    </div>
+
+                    <h2>Three Ways to Add CSS</h2>
+
+                    <h3>1. External CSS (Best Practice)</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">HTML</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">&lt;head&gt;</span>
+    <span class="code-tag">&lt;link</span> <span class="code-attr">rel</span>=<span class="code-value">"stylesheet"</span> <span class="code-attr">href</span>=<span class="code-value">"styles.css"</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;/head&gt;</span></code></pre>
+                    </div>
+
+                    <h3>2. Internal CSS</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">HTML</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">&lt;style&gt;</span>
+    <span class="code-tag">h1</span> { <span class="code-attr">color</span>: <span class="code-value">blue</span>; }
+<span class="code-tag">&lt;/style&gt;</span></code></pre>
+                    </div>
+
+                    <h3>3. Inline CSS</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">HTML</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">&lt;h1</span> <span class="code-attr">style</span>=<span class="code-value">"color: blue;"</span><span class="code-tag">&gt;</span>Hello<span class="code-tag">&lt;/h1&gt;</span></code></pre>
+                    </div>
+
+                    <div class="info-box">
+                        <div class="info-box-title">💡 Best Practice</div>
+                        <p>Use <strong>external CSS files</strong> for most projects. They're easier to maintain and can be reused across multiple pages.</p>
+                    </div>
+
+                    <h2>Basic CSS Properties</h2>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">CSS</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">p</span> {
+    <span class="code-attr">color</span>: <span class="code-value">darkblue</span>;
+    <span class="code-attr">font-size</span>: <span class="code-value">18px</span>;
+    <span class="code-attr">background-color</span>: <span class="code-value">lightgray</span>;
+    <span class="code-attr">padding</span>: <span class="code-value">20px</span>;
+}</code></pre>
+                    </div>
+
+                    <div class="try-it">
+                        <div class="try-it-title">🎯 Exercise: Style Your First Page</div>
+                        <p>Let's put CSS into practice:</p>
+                        <ol>
+                            <li>Create an HTML file with an h1, h2, and paragraphs</li>
+                            <li>Create "styles.css" and link it</li>
+                            <li>Style the h1 with purple color and 48px font</li>
+                            <li>Style paragraphs with 18px font and light gray background</li>
+                            <li>Add 20px padding to paragraphs</li>
+                        </ol>
+                    </div>
+                `,
+
+                'css-2': `
+                    <h2>CSS Selectors</h2>
+                    <p>Selectors tell CSS which HTML elements to style. Mastering selectors gives you precise control.</p>
+
+                    <h3>1. Element Selector</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">CSS</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">p</span> { <span class="code-attr">color</span>: <span class="code-value">blue</span>; }
+<span class="code-tag">h1</span> { <span class="code-attr">font-size</span>: <span class="code-value">36px</span>; }</code></pre>
+                    </div>
+
+                    <h3>2. Class Selector</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">CSS</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">.highlight</span> {
+    <span class="code-attr">background-color</span>: <span class="code-value">yellow</span>;
+    <span class="code-attr">font-weight</span>: <span class="code-value">bold</span>;
+}</code></pre>
+                    </div>
+
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">HTML</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">&lt;p</span> <span class="code-attr">class</span>=<span class="code-value">"highlight"</span><span class="code-tag">&gt;</span>Highlighted text<span class="code-tag">&lt;/p&gt;</span></code></pre>
+                    </div>
+
+                    <h3>3. ID Selector</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">CSS</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">#header</span> {
+    <span class="code-attr">background-color</span>: <span class="code-value">navy</span>;
+    <span class="code-attr">color</span>: <span class="code-value">white</span>;
+}</code></pre>
+                    </div>
+
+                    <div class="info-box">
+                        <div class="info-box-title">💡 Classes vs IDs</div>
+                        <p><strong>Classes</strong> can be used multiple times. <strong>IDs</strong> should be unique. For styling, prefer classes!</p>
+                    </div>
+
+                    <h2>Text Styling</h2>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">CSS</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">.text-example</span> {
+    <span class="code-attr">color</span>: <span class="code-value">darkred</span>;
+    <span class="code-attr">font-size</span>: <span class="code-value">20px</span>;
+    <span class="code-attr">font-weight</span>: <span class="code-value">bold</span>;
+    <span class="code-attr">text-align</span>: <span class="code-value">center</span>;
+    <span class="code-attr">line-height</span>: <span class="code-value">1.5</span>;
+}</code></pre>
+                    </div>
+
+                    <div class="try-it">
+                        <div class="try-it-title">🎯 Exercise: Create a Styled Card</div>
+                        <p>Build a profile card using selectors:</p>
+                        <ol>
+                            <li>Create a div with class="card"</li>
+                            <li>Add an h2, paragraph with class="bio", and paragraph with class="contact"</li>
+                            <li>Style .card with background, padding, and border</li>
+                            <li>Style h2 inside .card differently</li>
+                            <li>Style .bio with italic text</li>
+                        </ol>
+                    </div>
+                `,
+
+                'css-3': `
+                    <h2>Working with Colors</h2>
+                    <p>Colors bring life to your website! CSS provides multiple ways to specify colors.</p>
+
+                    <h3>Color Formats</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">CSS</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-comment">/* Named colors */</span>
+<span class="code-tag">.box1</span> { <span class="code-attr">color</span>: <span class="code-value">red</span>; }
+
+<span class="code-comment">/* Hex colors */</span>
+<span class="code-tag">.box2</span> { <span class="code-attr">color</span>: <span class="code-value">#FF0000</span>; }
+
+<span class="code-comment">/* RGB colors */</span>
+<span class="code-tag">.box3</span> { <span class="code-attr">color</span>: <span class="code-value">rgb(255, 0, 0)</span>; }
+
+<span class="code-comment">/* RGBA with transparency */</span>
+<span class="code-tag">.box4</span> { <span class="code-attr">background</span>: <span class="code-value">rgba(255, 0, 0, 0.5)</span>; }</code></pre>
+                    </div>
+
+                    <h2>Background Properties</h2>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">CSS</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">.hero</span> {
+    <span class="code-attr">background-image</span>: <span class="code-value">url('banner.jpg')</span>;
+    <span class="code-attr">background-size</span>: <span class="code-value">cover</span>;
+    <span class="code-attr">background-position</span>: <span class="code-value">center</span>;
+    <span class="code-attr">background-repeat</span>: <span class="code-value">no-repeat</span>;
+}</code></pre>
+                    </div>
+
+                    <h2>Gradients</h2>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">CSS</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">.gradient</span> {
+    <span class="code-comment">/* Linear gradient */</span>
+    <span class="code-attr">background</span>: <span class="code-value">linear-gradient(to right, red, yellow)</span>;
+    
+    <span class="code-comment">/* Radial gradient */</span>
+    <span class="code-attr">background</span>: <span class="code-value">radial-gradient(circle, red, blue)</span>;
+}</code></pre>
+                    </div>
+
+                    <div class="try-it">
+                        <div class="try-it-title">🎯 Exercise: Create a Colorful Hero Section</div>
+                        <p>Design a hero section with colors and backgrounds:</p>
+                        <ol>
+                            <li>Create a div with class="hero"</li>
+                            <li>Add a gradient background</li>
+                            <li>Set height to 400px and center text</li>
+                            <li>Make text white with good contrast</li>
+                            <li>Create a card with RGBA background transparency</li>
+                        </ol>
+                    </div>
+                `,
+
+                'css-4': `
+                    <h2>The CSS Box Model</h2>
+                    <p>Every HTML element is a rectangular box. The box model consists of: <strong>content</strong>, <strong>padding</strong>, <strong>border</strong>, and <strong>margin</strong>.</p>
+
+                    <div class="info-box">
+                        <div class="info-box-title">📦 Box Model Layers</div>
+                        <p>From inside to outside:<br><strong>Content → Padding → Border → Margin</strong></p>
+                    </div>
+
+                    <h2>Padding</h2>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">CSS</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">.box</span> {
+    <span class="code-attr">padding</span>: <span class="code-value">20px</span>;           <span class="code-comment">/* All sides */</span>
+    <span class="code-attr">padding</span>: <span class="code-value">10px 15px</span>;     <span class="code-comment">/* vertical horizontal */</span>
+    <span class="code-attr">padding-top</span>: <span class="code-value">10px</span>;     <span class="code-comment">/* Individual sides */</span>
+}</code></pre>
+                    </div>
+
+                    <h2>Border</h2>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">CSS</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">.box</span> {
+    <span class="code-attr">border</span>: <span class="code-value">2px solid black</span>;
+    <span class="code-attr">border-radius</span>: <span class="code-value">10px</span>;     <span class="code-comment">/* Rounded corners */</span>
+}</code></pre>
+                    </div>
+
+                    <h2>Margin</h2>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">CSS</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">.box</span> {
+    <span class="code-attr">margin</span>: <span class="code-value">20px</span>;
+    <span class="code-attr">margin</span>: <span class="code-value">0 auto</span>;  <span class="code-comment">/* Center horizontally */</span>
+}</code></pre>
+                    </div>
+
+                    <h2>Box Sizing</h2>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">CSS</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-comment">/* Best practice: include padding/border in width */</span>
+<span class="code-tag">*</span> {
+    <span class="code-attr">box-sizing</span>: <span class="code-value">border-box</span>;
+}</code></pre>
+                    </div>
+
+                    <div class="info-box">
+                        <div class="info-box-title">💡 Best Practice</div>
+                        <p>Always use <strong>box-sizing: border-box</strong> to make sizing more predictable!</p>
+                    </div>
+
+                    <div class="try-it">
+                        <div class="try-it-title">🎯 Exercise: Build a Card Component</div>
+                        <p>Create a modern card using the box model:</p>
+                        <ol>
+                            <li>Create a card div with width 300px</li>
+                            <li>Add 20px padding</li>
+                            <li>Add a 1px border with rounded corners</li>
+                            <li>Add 20px margin</li>
+                            <li>Add a subtle box-shadow</li>
+                            <li>Style a button inside with padding and borders</li>
+                        </ol>
+                    </div>
+                `,
+
+                'layout-1': `
+                    <h2>Introduction to Flexbox</h2>
+                    <p>Flexbox is a powerful layout system for creating flexible, responsive layouts. It's perfect for aligning items and building navigation bars, cards, and more.</p>
+
+                    <h3>How Flexbox Works</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">CSS</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">.container</span> {
+    <span class="code-attr">display</span>: <span class="code-value">flex</span>;
+}</code></pre>
+                    </div>
+
+                    <h2>Flex Container Properties</h2>
+
+                    <h3>Justify Content</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">CSS</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">.container</span> {
+    <span class="code-attr">display</span>: <span class="code-value">flex</span>;
+    <span class="code-attr">justify-content</span>: <span class="code-value">center</span>;        <span class="code-comment">/* center items */</span>
+    <span class="code-attr">justify-content</span>: <span class="code-value">space-between</span>;  <span class="code-comment">/* space between */</span>
+    <span class="code-attr">justify-content</span>: <span class="code-value">space-around</span>;   <span class="code-comment">/* space around */</span>
+}</code></pre>
+                    </div>
+
+                    <h3>Align Items</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">CSS</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">.container</span> {
+    <span class="code-attr">display</span>: <span class="code-value">flex</span>;
+    <span class="code-attr">align-items</span>: <span class="code-value">center</span>;    <span class="code-comment">/* center vertically */</span>
+}</code></pre>
+                    </div>
+
+                    <div class="info-box">
+                        <div class="info-box-title">💡 Perfect Centering</div>
+                        <p>Want to center something both ways?<br><code>display: flex; justify-content: center; align-items: center;</code></p>
+                    </div>
+
+                    <h3>Flex Direction</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">CSS</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">.container</span> {
+    <span class="code-attr">flex-direction</span>: <span class="code-value">row</span>;        <span class="code-comment">/* horizontal (default) */</span>
+    <span class="code-attr">flex-direction</span>: <span class="code-value">column</span>;     <span class="code-comment">/* vertical */</span>
+}</code></pre>
+                    </div>
+
+                    <h3>Gap</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">CSS</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">.container</span> {
+    <span class="code-attr">display</span>: <span class="code-value">flex</span>;
+    <span class="code-attr">gap</span>: <span class="code-value">20px</span>;  <span class="code-comment">/* space between items */</span>
+}</code></pre>
+                    </div>
+
+                    <div class="try-it">
+                        <div class="try-it-title">🎯 Exercise: Build a Responsive Layout</div>
+                        <p>Create a responsive page using Flexbox:</p>
+                        <ol>
+                            <li>Create a navigation bar with flexbox (space items apart)</li>
+                            <li>Create a hero section with centered text</li>
+                            <li>Create 3 feature cards in a row with gap</li>
+                            <li>Add flex-wrap so cards wrap on smaller screens</li>
+                        </ol>
+                    </div>
+                `,
+
+                'layout-2': `
+                    <h2>Introduction to CSS Grid</h2>
+                    <p>CSS Grid is powerful for two-dimensional layouts. While Flexbox is great for rows OR columns, Grid excels at both simultaneously.</p>
+
+                    <h3>Getting Started</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">CSS</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">.container</span> {
+    <span class="code-attr">display</span>: <span class="code-value">grid</span>;
+    <span class="code-attr">grid-template-columns</span>: <span class="code-value">repeat(3, 1fr)</span>;
+    <span class="code-attr">gap</span>: <span class="code-value">20px</span>;
+}</code></pre>
+                    </div>
+
+                    <div class="info-box">
+                        <div class="info-box-title">💡 Understanding 'fr' Units</div>
+                        <p>The <strong>fr</strong> unit represents a fraction of available space. <code>1fr 2fr</code> means the second column gets twice as much space.</p>
+                    </div>
+
+                    <h2>Grid Template Columns</h2>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">CSS</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">.grid</span> {
+    <span class="code-attr">display</span>: <span class="code-value">grid</span>;
+    <span class="code-attr">grid-template-columns</span>: <span class="code-value">200px 1fr 2fr</span>;  <span class="code-comment">/* Mixed sizes */</span>
+    <span class="code-attr">grid-template-columns</span>: <span class="code-value">repeat(3, 1fr)</span>;  <span class="code-comment">/* 3 equal columns */</span>
+}</code></pre>
+                    </div>
+
+                    <h2>Spanning Columns/Rows</h2>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">CSS</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">.item-wide</span> {
+    <span class="code-attr">grid-column</span>: <span class="code-value">span 2</span>;  <span class="code-comment">/* span 2 columns */</span>
+}
+
+<span class="code-tag">.item-tall</span> {
+    <span class="code-attr">grid-row</span>: <span class="code-value">span 2</span>;     <span class="code-comment">/* span 2 rows */</span>
+}</code></pre>
+                    </div>
+
+                    <h2>Grid Template Areas</h2>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">CSS</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">.container</span> {
+    <span class="code-attr">display</span>: <span class="code-value">grid</span>;
+    <span class="code-attr">grid-template-areas</span>:
+        <span class="code-value">"header header header"</span>
+        <span class="code-value">"sidebar content content"</span>
+        <span class="code-value">"footer footer footer"</span>;
+}
+
+<span class="code-tag">.header</span>  { <span class="code-attr">grid-area</span>: <span class="code-value">header</span>; }
+<span class="code-tag">.sidebar</span> { <span class="code-attr">grid-area</span>: <span class="code-value">sidebar</span>; }</code></pre>
+                    </div>
+
+                    <div class="try-it">
+                        <div class="try-it-title">🎯 Exercise: Build a Dashboard</div>
+                        <p>Create a dashboard using CSS Grid:</p>
+                        <ol>
+                            <li>Use grid template areas for header, sidebar, content, footer</li>
+                            <li>Create a nested grid in content with 3 columns</li>
+                            <li>Make one card span 2 columns</li>
+                            <li>Make another card span 2 rows</li>
+                            <li>Add 20px gap between elements</li>
+                        </ol>
+                    </div>
+                `,
+
+                'layout-3': `
+                    <h2>Responsive Web Design</h2>
+                    <p>Responsive design ensures your website looks great on all devices—phones, tablets, and desktops.</p>
+
+                    <h3>The Viewport Meta Tag</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">HTML</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">&lt;meta</span> <span class="code-attr">name</span>=<span class="code-value">"viewport"</span> <span class="code-attr">content</span>=<span class="code-value">"width=device-width, initial-scale=1.0"</span><span class="code-tag">&gt;</span></code></pre>
+                    </div>
+
+                    <h2>Media Queries</h2>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">CSS</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-comment">/* Mobile-first: Start with mobile styles */</span>
+<span class="code-tag">.container</span> {
+    <span class="code-attr">padding</span>: <span class="code-value">10px</span>;
+}
+
+<span class="code-comment">/* Tablet and up */</span>
+<span class="code-tag">@media</span> (<span class="code-attr">min-width</span>: <span class="code-value">768px</span>) {
+    <span class="code-tag">.container</span> {
+        <span class="code-attr">padding</span>: <span class="code-value">20px</span>;
+    }
+}
+
+<span class="code-comment">/* Desktop and up */</span>
+<span class="code-tag">@media</span> (<span class="code-attr">min-width</span>: <span class="code-value">1024px</span>) {
+    <span class="code-tag">.container</span> {
+        <span class="code-attr">max-width</span>: <span class="code-value">1200px</span>;
+        <span class="code-attr">margin</span>: <span class="code-value">0 auto</span>;
+    }
+}</code></pre>
+                    </div>
+
+                    <div class="info-box">
+                        <div class="info-box-title">💡 Mobile-First Approach</div>
+                        <p>Start with mobile styles, then use <strong>min-width</strong> queries to enhance for larger screens.</p>
+                    </div>
+
+                    <h2>Responsive Images</h2>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">CSS</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">img</span> {
+    <span class="code-attr">max-width</span>: <span class="code-value">100%</span>;
+    <span class="code-attr">height</span>: <span class="code-value">auto</span>;
+}</code></pre>
+                    </div>
+
+                    <h2>Responsive Flexbox</h2>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-label">CSS</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code><span class="code-tag">.cards</span> {
+    <span class="code-attr">display</span>: <span class="code-value">flex</span>;
+    <span class="code-attr">flex-wrap</span>: <span class="code-value">wrap</span>;
+    <span class="code-attr">gap</span>: <span class="code-value">20px</span>;
+}
+
+<span class="code-tag">.card</span> {
+    <span class="code-attr">flex</span>: <span class="code-value">1 1 100%</span>;  <span class="code-comment">/* Mobile: full width */</span>
+}
+
+<span class="code-tag">@media</span> (<span class="code-attr">min-width</span>: <span class="code-value">768px</span>) {
+    <span class="code-tag">.card</span> {
+        <span class="code-attr">flex</span>: <span class="code-value">1 1 calc(50% - 10px)</span>;  <span class="code-comment">/* Tablet: 2 per row */</span>
+    }
+}</code></pre>
+                    </div>
+
+                    <div class="try-it">
+                        <div class="try-it-title">🎯 Final Project: Responsive Portfolio</div>
+                        <p>Build a complete responsive website:</p>
+                        <ol>
+                            <li><strong>Header:</strong> Vertical menu on mobile, horizontal on desktop</li>
+                            <li><strong>Hero:</strong> Full-width with responsive fonts</li>
+                            <li><strong>Projects Grid:</strong> 1 column mobile, 2 tablet, 3 desktop</li>
+                            <li><strong>About Section:</strong> Stacked mobile, side-by-side desktop</li>
+                            <li><strong>Footer:</strong> Responsive contact info</li>
+                        </ol>
+                        <p><strong>🎉 Congratulations!</strong> You now have a solid foundation in HTML and CSS!</p>
+                    </div>
+                `
+            };
+
+            return lessons[id] || `
+                <h2>Lesson Content</h2>
+                <p>Content for this lesson is being prepared.</p>
+            `;
+        }
+
+        function getNextLessonTitle(unit, index) {
+            if (index < lessons[unit].length - 1) {
+                return lessons[unit][index + 1].title;
+            }
+            
+            // Find next unit
+            const units = Object.keys(lessons);
+            const currentUnitIdx = units.indexOf(unit);
+            if (currentUnitIdx < units.length - 1) {
+                const nextUnit = units[currentUnitIdx + 1];
+                return lessons[nextUnit][0].title;
+            }
+            
+            return 'Course Complete!';
+        }
+
+        function completeLesson() {
+            if (!currentLesson) return;
+            
+            const { unit, index } = currentLesson;
+            lessons[unit][index].completed = true;
+            saveProgress();
+            
+            // Update UI
+            renderLessonList(unit, `${unit}-lessons`);
+            updateNav();
+            
+            // Move to next lesson
+            if (index < lessons[unit].length - 1) {
+                loadLesson(unit, index + 1);
+            } else {
+                // Move to next unit
+                const units = Object.keys(lessons);
+                const currentUnitIdx = units.indexOf(unit);
+                if (currentUnitIdx < units.length - 1) {
+                    const nextUnit = units[currentUnitIdx + 1];
+                    loadLesson(nextUnit, 0);
+                } else {
+                    alert('🎉 Congratulations! You\'ve completed all lessons!');
+                }
+            }
+        }
+
+        // Profile Page
+        function renderProfilePage() {
+            if (!currentUser) {
+                showPage('landing');
+                return;
+            }
+
+            document.getElementById('profile-name').textContent = currentUser.name;
+            document.getElementById('profile-email').textContent = currentUser.email;
+            document.getElementById('profile-avatar').textContent = currentUser.name.charAt(0).toUpperCase();
+            
+            document.getElementById('settings-name').value = currentUser.name;
+            document.getElementById('settings-email').value = currentUser.email;
+
+            // Calculate progress
+            const htmlCompleted = lessons.html.filter(l => l.completed).length;
+            const cssCompleted = lessons.css.filter(l => l.completed).length;
+            const layoutCompleted = lessons.layout.filter(l => l.completed).length;
+            const totalCompleted = htmlCompleted + cssCompleted + layoutCompleted;
+            const total = getTotalCount();
+
+            document.getElementById('lessons-completed').textContent = totalCompleted;
+            document.getElementById('total-lessons').textContent = total;
+            document.getElementById('progress-percentage').textContent = Math.round((totalCompleted / total) * 100) + '%';
+
+            // Update course progress
+            updateCourseProgress('html', htmlCompleted, lessons.html.length);
+            updateCourseProgress('css', cssCompleted, lessons.css.length);
+            updateCourseProgress('layout', layoutCompleted, lessons.layout.length);
+        }
+
+        function updateCourseProgress(unit, completed, total) {
+            const percentage = (completed / total) * 100;
+            document.getElementById(`${unit}-progress-bar`).style.width = percentage + '%';
+            document.getElementById(`${unit}-progress-text`).textContent = `${completed}/${total} lessons`;
+        }
+
+        function updateProfile() {
+            const newName = document.getElementById('settings-name').value;
+            if (newName.trim()) {
+                currentUser.name = newName.trim();
+                saveUserData();
+                
+                // Update users array
+                const users = JSON.parse(localStorage.getItem('codepath_users') || '[]');
+                const userIdx = users.findIndex(u => u.email === currentUser.email);
+                if (userIdx !== -1) {
+                    users[userIdx].name = newName.trim();
+                    localStorage.setItem('codepath_users', JSON.stringify(users));
+                }
+                
+                updateNav();
+                renderProfilePage();
+                alert('Profile updated successfully!');
+            }
+        }
+
+        // Utility Functions
+        function getCompletedCount() {
+            return Object.values(lessons).flat().filter(l => l.completed).length;
+        }
+
+        function getTotalCount() {
+            return Object.values(lessons).flat().length;
+        }
+
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block').querySelector('code');
+            const text = codeBlock.textContent;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                button.style.background = 'var(--success)';
+                button.style.color = 'white';
+                button.style.borderColor = 'var(--success)';
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = 'transparent';
+                    button.style.color = 'var(--text-secondary)';
+                    button.style.borderColor = 'var(--border)';
+                }, 2000);
+            });
+        }
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
