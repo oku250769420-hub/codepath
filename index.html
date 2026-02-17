@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CodePath - Learn Web Development at Your Own Pace</title>
+    <link rel="icon" href="images/favicon.ico" type="image/icon>
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=JetBrains+Mono:wght@400;500&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -882,100 +883,7 @@
             font-size: 1.1rem;
         }
 
-        /* Interactive Code Editor */
-        .code-editor {
-            margin-top: 1.5rem;
-        }
-
-        .editor-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .editor-panel {
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .editor-header {
-            background: rgba(0, 0, 0, 0.2);
-            padding: 0.75rem 1rem;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .editor-label {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            font-weight: 600;
-        }
-
-        .run-btn {
-            background: var(--accent-primary);
-            color: var(--bg-primary);
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            font-weight: 600;
-            transition: all 0.3s;
-            font-family: 'DM Sans', sans-serif;
-        }
-
-        .run-btn:hover {
-            background: var(--accent-secondary);
-            transform: translateY(-1px);
-        }
-
-        .code-input {
-            width: 100%;
-            min-height: 250px;
-            padding: 1rem;
-            background: var(--bg-primary);
-            border: none;
-            color: var(--text-primary);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
-            line-height: 1.6;
-            resize: vertical;
-            outline: none;
-        }
-
-        .code-input:focus {
-            background: rgba(77, 208, 225, 0.05);
-        }
-
-        .code-output {
-            width: 100%;
-            height: 250px;
-            border: none;
-            background: white;
-        }
-
-        .output-placeholder {
-            padding: 1rem;
-            color: var(--text-muted);
-            font-style: italic;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 250px;
-        }
-
-        @media (max-width: 968px) {
-            .editor-container {
-                grid-template-columns: 1fr;
-            }
-        }
-
+        /* Lesson Navigation */
         .lesson-nav {
             display: flex;
             justify-content: space-between;
@@ -1164,7 +1072,7 @@
                                 <div class="stat-label">Lessons Completed</div>
                             </div>
                             <div class="stat">
-                                <div class="stat-value" id="total-lessons">25</div>
+                                <div class="stat-value" id="total-lessons">28</div>
                                 <div class="stat-label">Total Lessons</div>
                             </div>
                             <div class="stat">
@@ -1180,7 +1088,7 @@
                     <div class="course-progress-item">
                         <div class="course-progress-header">
                             <span style="font-weight: 600;">HTML Fundamentals</span>
-                            <span style="color: var(--text-muted);" id="html-progress-text">0/5 lessons</span>
+                            <span style="color: var(--text-muted);" id="html-progress-text">0/7 lessons</span>
                         </div>
                         <div class="progress-bar-container">
                             <div class="progress-bar" id="html-progress-bar" style="width: 0%"></div>
@@ -1189,7 +1097,7 @@
                     <div class="course-progress-item">
                         <div class="course-progress-header">
                             <span style="font-weight: 600;">CSS Basics</span>
-                            <span style="color: var(--text-muted);" id="css-progress-text">0/4 lessons</span>
+                            <span style="color: var(--text-muted);" id="css-progress-text">0/6 lessons</span>
                         </div>
                         <div class="progress-bar-container">
                             <div class="progress-bar" id="css-progress-bar" style="width: 0%"></div>
@@ -1202,6 +1110,15 @@
                         </div>
                         <div class="progress-bar-container">
                             <div class="progress-bar" id="layout-progress-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="course-progress-item">
+                        <div class="course-progress-header">
+                            <span style="font-weight: 600;">JavaScript Basics</span>
+                            <span style="color: var(--text-muted);" id="javascript-progress-text">0/6 lessons</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" id="javascript-progress-bar" style="width: 0%"></div>
                         </div>
                     </div>
                 </div>
@@ -1256,6 +1173,16 @@
                                 CSS Layout
                             </div>
                             <ul class="lesson-list" id="layout-lessons">
+                                <!-- Dynamic content -->
+                            </ul>
+                        </div>
+
+                        <div class="unit">
+                            <div class="unit-title">
+                                <span class="unit-number">Unit 4</span>
+                                JavaScript Basics
+                            </div>
+                            <ul class="lesson-list" id="javascript-lessons">
                                 <!-- Dynamic content -->
                             </ul>
                         </div>
@@ -1333,18 +1260,30 @@
                 { id: 'html-2', title: 'HTML Document Structure', completed: false },
                 { id: 'html-3', title: 'Text Elements & Formatting', completed: false },
                 { id: 'html-4', title: 'Links & Navigation', completed: false },
-                { id: 'html-5', title: 'Images & Media', completed: false }
+                { id: 'html-5', title: 'Images & Media', completed: false },
+                { id: 'html-6', title: 'Tables & Forms', completed: false },
+                { id: 'html-7', title: 'Semantic HTML', completed: false }
             ],
             css: [
                 { id: 'css-1', title: 'Introduction to CSS', completed: false },
                 { id: 'css-2', title: 'Selectors & Properties', completed: false },
                 { id: 'css-3', title: 'Colors & Backgrounds', completed: false },
-                { id: 'css-4', title: 'Box Model', completed: false }
+                { id: 'css-4', title: 'Box Model', completed: false },
+                { id: 'css-5', title: 'Typography & Fonts', completed: false },
+                { id: 'css-6', title: 'Transitions & Animations', completed: false }
             ],
             layout: [
                 { id: 'layout-1', title: 'Flexbox Fundamentals', completed: false },
                 { id: 'layout-2', title: 'CSS Grid Basics', completed: false },
                 { id: 'layout-3', title: 'Responsive Design', completed: false }
+            ],
+            javascript: [
+                { id: 'js-1', title: 'Introduction to JavaScript', completed: false },
+                { id: 'js-2', title: 'Variables & Data Types', completed: false },
+                { id: 'js-3', title: 'Operators & Expressions', completed: false },
+                { id: 'js-4', title: 'Conditionals (if/else)', completed: false },
+                { id: 'js-5', title: 'Loops', completed: false },
+                { id: 'js-6', title: 'Functions', completed: false }
             ]
         };
 
@@ -1526,6 +1465,7 @@
             renderLessonList('html', 'html-lessons');
             renderLessonList('css', 'css-lessons');
             renderLessonList('layout', 'layout-lessons');
+            renderLessonList('javascript', 'javascript-lessons');
             
             // Load first incomplete lesson or first lesson
             const firstIncomplete = findFirstIncompleteLesson();
@@ -1621,7 +1561,8 @@
             const names = {
                 html: 'Unit 1: HTML Fundamentals',
                 css: 'Unit 2: CSS Basics',
-                layout: 'Unit 3: CSS Layout'
+                layout: 'Unit 3: CSS Layout',
+                javascript: 'Unit 4: JavaScript Basics'
             };
             return names[unit];
         }
@@ -1633,13 +1574,23 @@
                 'html-3': 'Master headings, paragraphs, emphasis, and more to structure your text content.',
                 'html-4': 'Create hyperlinks to navigate between pages and sections of your website.',
                 'html-5': 'Add images, videos, and other media to make your pages visually engaging.',
+                'html-6': 'Build data tables and create interactive forms to collect user input.',
+                'html-7': 'Use semantic HTML elements to create meaningful, accessible web pages.',
                 'css-1': 'Introduction to Cascading Style Sheets and how they transform HTML into beautiful designs.',
                 'css-2': 'Learn how to target HTML elements and apply styles using CSS selectors.',
                 'css-3': 'Explore the world of colors, gradients, and background styling in CSS.',
                 'css-4': 'Understand the box model concept and how spacing works in CSS.',
+                'css-5': 'Master typography, font families, and text styling for beautiful content.',
+                'css-6': 'Add smooth transitions and animations to bring your websites to life.',
                 'layout-1': 'Master Flexbox for creating flexible, responsive layouts with ease.',
                 'layout-2': 'Learn CSS Grid for complex two-dimensional layouts.',
-                'layout-3': 'Make your websites look great on all devices with responsive design techniques.'
+                'layout-3': 'Make your websites look great on all devices with responsive design techniques.',
+                'js-1': 'Get started with JavaScript, the programming language of the web.',
+                'js-2': 'Learn about variables, data types, and how to store information in your programs.',
+                'js-3': 'Master operators for performing calculations and comparisons in JavaScript.',
+                'js-4': 'Use conditional statements to make decisions in your code.',
+                'js-5': 'Learn loops to repeat actions and iterate through data efficiently.',
+                'js-6': 'Create reusable functions to organize and structure your JavaScript code.'
             };
             return descriptions[id] || 'Learn essential web development concepts.';
         }
@@ -1708,27 +1659,7 @@
                             <li>A paragraph introducing yourself</li>
                             <li>Another paragraph with some <strong>bold</strong> and <em>italic</em> text</li>
                         </ol>
-                        
-                        <div class="code-editor">
-                            <div class="editor-container">
-                                <div class="editor-panel">
-                                    <div class="editor-header">
-                                        <span class="editor-label">HTML Code</span>
-                                        <button class="run-btn" onclick="runCode('html1')">Run Code</button>
-                                    </div>
-                                    <textarea id="editor-input-html1" class="code-input" placeholder="Write your HTML here..."><!-- Try this example -->
-<h1>My Name</h1>
-<p>This is my first paragraph.</p>
-<p>HTML is <strong>amazing</strong>!</p></textarea>
-                                </div>
-                                <div class="editor-panel">
-                                    <div class="editor-header">
-                                        <span class="editor-label">Preview</span>
-                                    </div>
-                                    <iframe id="editor-output-html1" class="code-output"></iframe>
-                                </div>
-                            </div>
-                        </div>
+                        <p>Save your file as <strong>index.html</strong> and open it in your web browser to see your first webpage!</p>
                     </div>
                 `,
 
@@ -1787,34 +1718,8 @@
                             <li>Add the &lt;html&gt;, &lt;head&gt;, and &lt;body&gt; elements</li>
                             <li>In the head: add a title "About Me"</li>
                             <li>In the body: add a heading and 2-3 paragraphs about yourself</li>
+                            <li>Save as "about.html" and open in your browser</li>
                         </ol>
-                        
-                        <div class="code-editor">
-                            <div class="editor-container">
-                                <div class="editor-panel">
-                                    <div class="editor-header">
-                                        <span class="editor-label">HTML Code</span>
-                                        <button class="run-btn" onclick="runCode('html2')">Run Code</button>
-                                    </div>
-                                    <textarea id="editor-input-html2" class="code-input" placeholder="Write your HTML here..."><!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>About Me</title>
-</head>
-<body>
-    <h1>About Me</h1>
-    <p>Write about yourself here.</p>
-</body>
-</html></textarea>
-                                </div>
-                                <div class="editor-panel">
-                                    <div class="editor-header">
-                                        <span class="editor-label">Preview</span>
-                                    </div>
-                                    <iframe id="editor-output-html2" class="code-output"></iframe>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 `,
 
@@ -1876,36 +1781,6 @@
                             <li>Create an unordered list of 3-5 items</li>
                             <li>Use &lt;strong&gt; and &lt;em&gt; to emphasize text</li>
                         </ol>
-                        
-                        <div class="code-editor">
-                            <div class="editor-container">
-                                <div class="editor-panel">
-                                    <div class="editor-header">
-                                        <span class="editor-label">HTML Code</span>
-                                        <button class="run-btn" onclick="runCode('html3')">Run Code</button>
-                                    </div>
-                                    <textarea id="editor-input-html3" class="code-input" placeholder="Write your HTML here..."><h1>My Favorite Hobbies</h1>
-
-<h2>Reading</h2>
-<p>I love reading <strong>science fiction</strong> books.</p>
-
-<h2>Coding</h2>
-<p>Building websites is <em>so much fun</em>!</p>
-
-<ul>
-    <li>HTML</li>
-    <li>CSS</li>
-    <li>JavaScript</li>
-</ul></textarea>
-                                </div>
-                                <div class="editor-panel">
-                                    <div class="editor-header">
-                                        <span class="editor-label">Preview</span>
-                                    </div>
-                                    <iframe id="editor-output-html3" class="code-output"></iframe>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 `,
 
@@ -1972,43 +1847,6 @@
                             <li>Add an email link</li>
                             <li>Add external links to your favorite websites</li>
                         </ol>
-                        
-                        <div class="code-editor">
-                            <div class="editor-container">
-                                <div class="editor-panel">
-                                    <div class="editor-header">
-                                        <span class="editor-label">HTML Code</span>
-                                        <button class="run-btn" onclick="runCode('html4')">Run Code</button>
-                                    </div>
-                                    <textarea id="editor-input-html4" class="code-input" placeholder="Write your HTML here..."><nav>
-    <a href="#home">Home</a> |
-    <a href="#about">About</a> |
-    <a href="#contact">Contact</a>
-</nav>
-
-<h1 id="home">Welcome</h1>
-<p>This is the home section.</p>
-
-<h2 id="about">About Me</h2>
-<p>Learn more about me here.</p>
-
-<h2 id="contact">Contact</h2>
-<p>Email me at: <a href="mailto:hello@example.com">hello@example.com</a></p>
-
-<p>Visit my favorite sites:</p>
-<ul>
-    <li><a href="https://github.com" target="_blank">GitHub</a></li>
-    <li><a href="https://stackoverflow.com" target="_blank">Stack Overflow</a></li>
-</ul></textarea>
-                                </div>
-                                <div class="editor-panel">
-                                    <div class="editor-header">
-                                        <span class="editor-label">Preview</span>
-                                    </div>
-                                    <iframe id="editor-output-html4" class="code-output"></iframe>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 `,
 
@@ -2073,45 +1911,6 @@
                             <li>Use &lt;figure&gt; and &lt;figcaption&gt; for each</li>
                             <li>Write descriptive alt text for each image</li>
                         </ol>
-                        
-                        <div class="code-editor">
-                            <div class="editor-container">
-                                <div class="editor-panel">
-                                    <div class="editor-header">
-                                        <span class="editor-label">HTML Code</span>
-                                        <button class="run-btn" onclick="runCode('html5')">Run Code</button>
-                                    </div>
-                                    <textarea id="editor-input-html5" class="code-input" placeholder="Write your HTML here..."><h1>My Photo Gallery</h1>
-
-<figure>
-    <img src="https://picsum.photos/300/200?random=1" 
-         alt="Random landscape photo"
-         width="300">
-    <figcaption>Beautiful Landscape</figcaption>
-</figure>
-
-<figure>
-    <img src="https://picsum.photos/300/200?random=2" 
-         alt="Random nature photo"
-         width="300">
-    <figcaption>Nature Scene</figcaption>
-</figure>
-
-<figure>
-    <img src="https://picsum.photos/300/200?random=3" 
-         alt="Random architecture photo"
-         width="300">
-    <figcaption>Architecture</figcaption>
-</figure></textarea>
-                                </div>
-                                <div class="editor-panel">
-                                    <div class="editor-header">
-                                        <span class="editor-label">Preview</span>
-                                    </div>
-                                    <iframe id="editor-output-html5" class="code-output"></iframe>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 `,
 
@@ -2191,39 +1990,6 @@
                             <li>Style paragraphs with 18px font and light gray background</li>
                             <li>Add 20px padding to paragraphs</li>
                         </ol>
-                        
-                        <div class="code-editor">
-                            <div class="editor-container">
-                                <div class="editor-panel">
-                                    <div class="editor-header">
-                                        <span class="editor-label">HTML & CSS Code</span>
-                                        <button class="run-btn" onclick="runCode('css1')">Run Code</button>
-                                    </div>
-                                    <textarea id="editor-input-css1" class="code-input" placeholder="Write your HTML and CSS here..."><style>
-h1 {
-    color: purple;
-    font-size: 48px;
-}
-
-p {
-    font-size: 18px;
-    background-color: lightgray;
-    padding: 20px;
-}
-</style>
-
-<h1>My Styled Page</h1>
-<p>This is a styled paragraph!</p>
-<p>CSS makes everything look better.</p></textarea>
-                                </div>
-                                <div class="editor-panel">
-                                    <div class="editor-header">
-                                        <span class="editor-label">Preview</span>
-                                    </div>
-                                    <iframe id="editor-output-css1" class="code-output"></iframe>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 `,
 
@@ -2302,51 +2068,6 @@ p {
                             <li>Style h2 inside .card differently</li>
                             <li>Style .bio with italic text</li>
                         </ol>
-                        
-                        <div class="code-editor">
-                            <div class="editor-container">
-                                <div class="editor-panel">
-                                    <div class="editor-header">
-                                        <span class="editor-label">HTML & CSS Code</span>
-                                        <button class="run-btn" onclick="runCode('css2')">Run Code</button>
-                                    </div>
-                                    <textarea id="editor-input-css2" class="code-input" placeholder="Write your HTML and CSS here..."><style>
-.card {
-    background-color: #f0f0f0;
-    padding: 20px;
-    border: 2px solid #333;
-    border-radius: 10px;
-}
-
-.card h2 {
-    color: darkblue;
-    font-size: 28px;
-}
-
-.bio {
-    font-style: italic;
-}
-
-.contact {
-    color: gray;
-    font-size: 14px;
-}
-</style>
-
-<div class="card">
-    <h2>John Doe</h2>
-    <p class="bio">Web developer and designer</p>
-    <p class="contact">john@example.com</p>
-</div></textarea>
-                                </div>
-                                <div class="editor-panel">
-                                    <div class="editor-header">
-                                        <span class="editor-label">Preview</span>
-                                    </div>
-                                    <iframe id="editor-output-css2" class="code-output"></iframe>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 `,
 
@@ -2410,56 +2131,6 @@ p {
                             <li>Set height to 400px and center text</li>
                             <li>Make text white with good contrast</li>
                         </ol>
-                        
-                        <div class="code-editor">
-                            <div class="editor-container">
-                                <div class="editor-panel">
-                                    <div class="editor-header">
-                                        <span class="editor-label">HTML & CSS Code</span>
-                                        <button class="run-btn" onclick="runCode('css3')">Run Code</button>
-                                    </div>
-                                    <textarea id="editor-input-css3" class="code-input" placeholder="Write your HTML and CSS here..."><style>
-.hero {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    height: 400px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    text-align: center;
-    padding: 40px;
-}
-
-.hero h1 {
-    font-size: 48px;
-    margin-bottom: 20px;
-}
-
-.card {
-    background-color: rgba(255, 255, 255, 0.2);
-    padding: 20px;
-    border-radius: 10px;
-    margin-top: 20px;
-}
-</style>
-
-<div class="hero">
-    <h1>Welcome to My Site</h1>
-    <p>Beautiful gradients and colors!</p>
-    <div class="card">
-        <p>This card has transparency</p>
-    </div>
-</div></textarea>
-                                </div>
-                                <div class="editor-panel">
-                                    <div class="editor-header">
-                                        <span class="editor-label">Preview</span>
-                                    </div>
-                                    <iframe id="editor-output-css3" class="code-output"></iframe>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 `,
 
@@ -2534,58 +2205,6 @@ p {
                             <li>Add rounded corners and box-shadow</li>
                             <li>Style a button with padding and borders</li>
                         </ol>
-                        
-                        <div class="code-editor">
-                            <div class="editor-container">
-                                <div class="editor-panel">
-                                    <div class="editor-header">
-                                        <span class="editor-label">HTML & CSS Code</span>
-                                        <button class="run-btn" onclick="runCode('css4')">Run Code</button>
-                                    </div>
-                                    <textarea id="editor-input-css4" class="code-input" placeholder="Write your HTML and CSS here..."><style>
-* {
-    box-sizing: border-box;
-}
-
-.card {
-    width: 300px;
-    padding: 20px;
-    margin: 20px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background: white;
-}
-
-.card h2 {
-    margin-top: 0;
-}
-
-.btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background: #667eea;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    margin-top: 10px;
-}
-</style>
-
-<div class="card">
-    <h2>Card Title</h2>
-    <p>This is a card with proper spacing using the box model.</p>
-    <button class="btn">Click Me</button>
-</div></textarea>
-                                </div>
-                                <div class="editor-panel">
-                                    <div class="editor-header">
-                                        <span class="editor-label">Preview</span>
-                                    </div>
-                                    <iframe id="editor-output-css4" class="code-output"></iframe>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 `,
 
@@ -2669,71 +2288,6 @@ p {
                             <li>Create a hero section with centered text</li>
                             <li>Create 3 feature cards in a row with gap</li>
                         </ol>
-                        
-                        <div class="code-editor">
-                            <div class="editor-container">
-                                <div class="editor-panel">
-                                    <div class="editor-header">
-                                        <span class="editor-label">HTML & CSS Code</span>
-                                        <button class="run-btn" onclick="runCode('layout1')">Run Code</button>
-                                    </div>
-                                    <textarea id="editor-input-layout1" class="code-input" placeholder="Write your HTML and CSS here..."><style>
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #333;
-    color: white;
-    padding: 20px;
-}
-
-.hero {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 300px;
-    background: #667eea;
-    color: white;
-}
-
-.cards {
-    display: flex;
-    gap: 20px;
-    padding: 20px;
-    flex-wrap: wrap;
-}
-
-.card {
-    flex: 1 1 200px;
-    background: #f0f0f0;
-    padding: 20px;
-    border-radius: 8px;
-}
-</style>
-
-<div class="navbar">
-    <div>Logo</div>
-    <div>Menu</div>
-</div>
-
-<div class="hero">
-    <h1>Welcome!</h1>
-</div>
-
-<div class="cards">
-    <div class="card">Card 1</div>
-    <div class="card">Card 2</div>
-    <div class="card">Card 3</div>
-</div></textarea>
-                                </div>
-                                <div class="editor-panel">
-                                    <div class="editor-header">
-                                        <span class="editor-label">Preview</span>
-                                    </div>
-                                    <iframe id="editor-output-layout1" class="code-output"></iframe>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 `,
 
@@ -2813,56 +2367,6 @@ p {
                             <li>Create cards with different spanning</li>
                             <li>Add gaps between elements</li>
                         </ol>
-                        
-                        <div class="code-editor">
-                            <div class="editor-container">
-                                <div class="editor-panel">
-                                    <div class="editor-header">
-                                        <span class="editor-label">HTML & CSS Code</span>
-                                        <button class="run-btn" onclick="runCode('layout2')">Run Code</button>
-                                    </div>
-                                    <textarea id="editor-input-layout2" class="code-input" placeholder="Write your HTML and CSS here..."><style>
-.container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    padding: 20px;
-}
-
-.card {
-    background: #f0f0f0;
-    padding: 20px;
-    border-radius: 8px;
-}
-
-.card-wide {
-    grid-column: span 2;
-    background: lightblue;
-}
-
-.card-tall {
-    grid-row: span 2;
-    background: lightgreen;
-}
-</style>
-
-<div class="container">
-    <div class="card card-wide">Wide Card</div>
-    <div class="card">Card 1</div>
-    <div class="card card-tall">Tall Card</div>
-    <div class="card">Card 2</div>
-    <div class="card">Card 3</div>
-    <div class="card">Card 4</div>
-</div></textarea>
-                                </div>
-                                <div class="editor-panel">
-                                    <div class="editor-header">
-                                        <span class="editor-label">Preview</span>
-                                    </div>
-                                    <iframe id="editor-output-layout2" class="code-output"></iframe>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 `,
 
@@ -2954,86 +2458,566 @@ p {
                             <li>Hero section with centered text</li>
                             <li>Responsive card grid (1 column mobile, 3 desktop)</li>
                         </ol>
-                        
-                        <div class="code-editor">
-                            <div class="editor-container">
-                                <div class="editor-panel">
-                                    <div class="editor-header">
-                                        <span class="editor-label">HTML & CSS Code</span>
-                                        <button class="run-btn" onclick="runCode('layout3')">Run Code</button>
-                                    </div>
-                                    <textarea id="editor-input-layout3" class="code-input" placeholder="Write your HTML and CSS here..."><style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-.header {
-    background: #333;
-    color: white;
-    padding: 20px;
-}
-
-.hero {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    padding: 80px 20px;
-    text-align: center;
-}
-
-.projects {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
-    padding: 20px;
-}
-
-.card {
-    background: #f0f0f0;
-    padding: 20px;
-    border-radius: 8px;
-}
-
-@media (min-width: 768px) {
-    .projects {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (min-width: 1024px) {
-    .projects {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-</style>
-
-<div class="header">
-    <h2>My Portfolio</h2>
-</div>
-
-<div class="hero">
-    <h1>Welcome!</h1>
-    <p>Resize to see responsive design</p>
-</div>
-
-<div class="projects">
-    <div class="card">Project 1</div>
-    <div class="card">Project 2</div>
-    <div class="card">Project 3</div>
-</div></textarea>
-                                </div>
-                                <div class="editor-panel">
-                                    <div class="editor-header">
-                                        <span class="editor-label">Preview</span>
-                                    </div>
-                                    <iframe id="editor-output-layout3" class="code-output"></iframe>
-                                </div>
-                            </div>
-                        </div>
                         <p style="margin-top: 1rem;"><strong>🎉 Congratulations!</strong> You now have a solid foundation in HTML and CSS!</p>
                     </div>
-                `
+                `,
+
+                'html-6': `
+                <h2>HTML Tables</h2>
+                <p>Tables display data in rows and columns. Use tables for tabular data—not for layout!</p>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-label">HTML</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code><span class="code-tag">&lt;table&gt;</span>
+    <span class="code-tag">&lt;thead&gt;</span>
+        <span class="code-tag">&lt;tr&gt;</span>
+            <span class="code-tag">&lt;th&gt;</span>Name<span class="code-tag">&lt;/th&gt;</span>
+            <span class="code-tag">&lt;th&gt;</span>Age<span class="code-tag">&lt;/th&gt;</span>
+        <span class="code-tag">&lt;/tr&gt;</span>
+    <span class="code-tag">&lt;/thead&gt;</span>
+    <span class="code-tag">&lt;tbody&gt;</span>
+        <span class="code-tag">&lt;tr&gt;</span>
+            <span class="code-tag">&lt;td&gt;</span>John<span class="code-tag">&lt;/td&gt;</span>
+            <span class="code-tag">&lt;td&gt;</span>25<span class="code-tag">&lt;/td&gt;</span>
+        <span class="code-tag">&lt;/tr&gt;</span>
+    <span class="code-tag">&lt;/tbody&gt;</span>
+<span class="code-tag">&lt;/table&gt;</span></code></pre>
+                </div>
+
+                <h2>HTML Forms</h2>
+                <p>Forms collect user input. Common form elements include text inputs, buttons, checkboxes, and more.</p>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-label">HTML</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code><span class="code-tag">&lt;form&gt;</span>
+    <span class="code-tag">&lt;label&gt;</span>Name:<span class="code-tag">&lt;/label&gt;</span>
+    <span class="code-tag">&lt;input</span> <span class="code-attr">type</span>=<span class="code-value">"text"</span> <span class="code-attr">name</span>=<span class="code-value">"username"</span><span class="code-tag">&gt;</span>
+    
+    <span class="code-tag">&lt;label&gt;</span>Email:<span class="code-tag">&lt;/label&gt;</span>
+    <span class="code-tag">&lt;input</span> <span class="code-attr">type</span>=<span class="code-value">"email"</span> <span class="code-attr">name</span>=<span class="code-value">"email"</span><span class="code-tag">&gt;</span>
+    
+    <span class="code-tag">&lt;button</span> <span class="code-attr">type</span>=<span class="code-value">"submit"</span><span class="code-tag">&gt;</span>Submit<span class="code-tag">&lt;/button&gt;</span>
+<span class="code-tag">&lt;/form&gt;</span></code></pre>
+                </div>
+
+                <div class="try-it">
+                    <div class="try-it-title">🎯 Exercise: Create a Contact Form</div>
+                    <p>Build a contact form with validation:</p>
+                    <ol>
+                        <li>Add name, email, and message fields</li>
+                        <li>Include a submit button</li>
+                        <li>Add labels for accessibility</li>
+                    </ol>
+                </div>
+            `,
+
+            'html-7': `
+                <h2>Semantic HTML</h2>
+                <p>Semantic elements clearly describe their meaning to both the browser and developer. They improve accessibility and SEO.</p>
+
+                <h3>Common Semantic Elements</h3>
+                <ul>
+                    <li><strong>&lt;header&gt;</strong> - Page or section header</li>
+                    <li><strong>&lt;nav&gt;</strong> - Navigation links</li>
+                    <li><strong>&lt;main&gt;</strong> - Main content</li>
+                    <li><strong>&lt;article&gt;</strong> - Self-contained content</li>
+                    <li><strong>&lt;section&gt;</strong> - Thematic grouping</li>
+                    <li><strong>&lt;aside&gt;</strong> - Sidebar content</li>
+                    <li><strong>&lt;footer&gt;</strong> - Page or section footer</li>
+                </ul>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-label">HTML</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code><span class="code-tag">&lt;header&gt;</span>
+    <span class="code-tag">&lt;nav&gt;</span>Navigation here<span class="code-tag">&lt;/nav&gt;</span>
+<span class="code-tag">&lt;/header&gt;</span>
+
+<span class="code-tag">&lt;main&gt;</span>
+    <span class="code-tag">&lt;article&gt;</span>
+        <span class="code-tag">&lt;h2&gt;</span>Article Title<span class="code-tag">&lt;/h2&gt;</span>
+        <span class="code-tag">&lt;p&gt;</span>Article content...<span class="code-tag">&lt;/p&gt;</span>
+    <span class="code-tag">&lt;/article&gt;</span>
+<span class="code-tag">&lt;/main&gt;</span>
+
+<span class="code-tag">&lt;footer&gt;</span>
+    <span class="code-tag">&lt;p&gt;</span>© 2024 My Website<span class="code-tag">&lt;/p&gt;</span>
+<span class="code-tag">&lt;/footer&gt;</span></code></pre>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-box-title">💡 Why Use Semantic HTML?</div>
+                    <p>Semantic HTML helps screen readers navigate your site, improves SEO, and makes your code more readable and maintainable.</p>
+                </div>
+
+                <div class="try-it">
+                    <div class="try-it-title">🎯 Exercise: Build a Semantic Page</div>
+                    <p>Create a well-structured page using semantic HTML:</p>
+                    <ol>
+                        <li>Use proper semantic elements</li>
+                        <li>Include header, main, article, and footer</li>
+                        <li>Structure content meaningfully</li>
+                    </ol>
+                </div>
+            `,
+
+            'css-5': `
+                <h2>Typography & Web Fonts</h2>
+                <p>Typography is crucial for readability and visual appeal. CSS gives you complete control over how text appears.</p>
+
+                <h3>Font Properties</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-label">CSS</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code><span class="code-tag">body</span> {
+    <span class="code-attr">font-family</span>: <span class="code-value">'Arial', sans-serif</span>;
+    <span class="code-attr">font-size</span>: <span class="code-value">16px</span>;
+    <span class="code-attr">font-weight</span>: <span class="code-value">400</span>;
+    <span class="code-attr">line-height</span>: <span class="code-value">1.6</span>;
+    <span class="code-attr">letter-spacing</span>: <span class="code-value">0.5px</span>;
+}</code></pre>
+                </div>
+
+                <h3>Google Fonts</h3>
+                <p>Add custom fonts from Google Fonts:</p>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-label">HTML</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code><span class="code-tag">&lt;link</span> <span class="code-attr">href</span>=<span class="code-value">"https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"</span> <span class="code-attr">rel</span>=<span class="code-value">"stylesheet"</span><span class="code-tag">&gt;</span></code></pre>
+                </div>
+
+                <div class="try-it">
+                    <div class="try-it-title">🎯 Exercise: Style Typography</div>
+                    <p>Create beautiful typography:</p>
+                    <ol>
+                        <li>Style headings with different fonts</li>
+                        <li>Adjust line height for readability</li>
+                        <li>Add letter spacing to headings</li>
+                    </ol>
+                </div>
+            `,
+
+            'css-6': `
+                <h2>CSS Transitions</h2>
+                <p>Transitions create smooth changes between states, making your website feel more polished and interactive.</p>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-label">CSS</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code><span class="code-tag">.button</span> {
+    <span class="code-attr">background</span>: <span class="code-value">blue</span>;
+    <span class="code-attr">transition</span>: <span class="code-value">background 0.3s ease</span>;
+}
+
+<span class="code-tag">.button:hover</span> {
+    <span class="code-attr">background</span>: <span class="code-value">darkblue</span>;
+}</code></pre>
+                </div>
+
+                <h2>CSS Animations</h2>
+                <p>Animations allow you to create complex motion effects:</p>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-label">CSS</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code><span class="code-tag">@keyframes</span> <span class="code-value">slide</span> {
+    <span class="code-tag">from</span> { <span class="code-attr">transform</span>: <span class="code-value">translateX(0)</span>; }
+    <span class="code-tag">to</span> { <span class="code-attr">transform</span>: <span class="code-value">translateX(100px)</span>; }
+}
+
+<span class="code-tag">.box</span> {
+    <span class="code-attr">animation</span>: <span class="code-value">slide 2s infinite</span>;
+}</code></pre>
+                </div>
+
+                <div class="try-it">
+                    <div class="try-it-title">🎯 Exercise: Add Animations</div>
+                    <p>Create interactive animations:</p>
+                    <ol>
+                        <li>Add hover transitions to buttons</li>
+                        <li>Create a fading animation</li>
+                        <li>Experiment with timing functions</li>
+                    </ol>
+                </div>
+            `,
+
+            'js-1': `
+                <h2>What is JavaScript?</h2>
+                <p>JavaScript is the programming language of the web. While HTML provides structure and CSS handles styling, JavaScript adds interactivity and behavior to websites.</p>
+
+                <h3>Why Learn JavaScript?</h3>
+                <ul>
+                    <li>Make websites interactive and dynamic</li>
+                    <li>Respond to user actions (clicks, typing, scrolling)</li>
+                    <li>Update content without reloading the page</li>
+                    <li>Create web applications, games, and more</li>
+                </ul>
+
+                <h2>Your First JavaScript Code</h2>
+                <p>JavaScript can be added to HTML in several ways:</p>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-label">HTML with JavaScript</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code><span class="code-tag">&lt;script&gt;</span>
+    console.log("Hello, World!");
+    alert("Welcome to JavaScript!");
+<span class="code-tag">&lt;/script&gt;</span></code></pre>
+                </div>
+
+                <h3>The Console</h3>
+                <p>The console is a developer tool where you can see output and test code. Use <strong>console.log()</strong> to print messages:</p>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-label">JavaScript</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>console.log("This appears in the console");
+console.log(5 + 3);  // Output: 8</code></pre>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-box-title">💡 Opening the Console</div>
+                    <p>Press <strong>F12</strong> or <strong>Right-click → Inspect</strong> to open Developer Tools, then click the Console tab.</p>
+                </div>
+
+                <div class="try-it">
+                    <div class="try-it-title">🎯 Exercise: Your First JavaScript Program</div>
+                    <p>Write JavaScript to interact with the page:</p>
+                    <ol>
+                        <li>Display a message with console.log()</li>
+                        <li>Show an alert to the user</li>
+                        <li>Change text content on the page</li>
+                    </ol>
+                </div>
+            `,
+
+            'js-2': `
+                <h2>Variables</h2>
+                <p>Variables store data values. Think of them as labeled containers that hold information.</p>
+
+                <h3>Declaring Variables</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-label">JavaScript</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>let name = "John";
+let age = 25;
+let isStudent = true;
+
+const PI = 3.14159;  // const cannot be changed
+
+console.log(name);  // Output: John</code></pre>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-box-title">💡 let vs const</div>
+                    <p>Use <strong>let</strong> for variables that will change. Use <strong>const</strong> for values that stay the same.</p>
+                </div>
+
+                <h2>Data Types</h2>
+                <p>JavaScript has several data types:</p>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-label">JavaScript</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>// String (text)
+let name = "Alice";
+
+// Number
+let age = 30;
+let price = 19.99;
+
+// Boolean (true/false)
+let isActive = true;
+
+// Array (list)
+let colors = ["red", "green", "blue"];
+
+// Object
+let person = {
+    name: "Bob",
+    age: 25
+};</code></pre>
+                </div>
+
+                <div class="try-it">
+                    <div class="try-it-title">🎯 Exercise: Work with Variables</div>
+                    <p>Create and use variables:</p>
+                    <ol>
+                        <li>Declare variables of different types</li>
+                        <li>Display them on the page</li>
+                        <li>Update variable values</li>
+                    </ol>
+                </div>
+            `,
+
+            'js-3': `
+                <h2>Operators</h2>
+                <p>Operators perform operations on values and variables.</p>
+
+                <h3>Arithmetic Operators</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-label">JavaScript</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>let x = 10;
+let y = 3;
+
+console.log(x + y);  // 13 (addition)
+console.log(x - y);  // 7  (subtraction)
+console.log(x * y);  // 30 (multiplication)
+console.log(x / y);  // 3.33 (division)
+console.log(x % y);  // 1  (remainder)</code></pre>
+                </div>
+
+                <h3>Comparison Operators</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-label">JavaScript</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>let age = 18;
+
+console.log(age === 18);  // true (equal to)
+console.log(age !== 18);  // false (not equal to)
+console.log(age > 16);    // true (greater than)
+console.log(age < 20);    // true (less than)
+console.log(age >= 18);   // true (greater or equal)</code></pre>
+                </div>
+
+                <h3>Logical Operators</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-label">JavaScript</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>let age = 20;
+let hasLicense = true;
+
+// AND (&&) - both must be true
+console.log(age >= 18 && hasLicense);  // true
+
+// OR (||) - at least one must be true
+console.log(age < 18 || hasLicense);   // true
+
+// NOT (!) - reverses boolean
+console.log(!hasLicense);  // false</code></pre>
+                </div>
+
+                <div class="try-it">
+                    <div class="try-it-title">🎯 Exercise: Calculator</div>
+                    <p>Build a simple calculator:</p>
+                    <ol>
+                        <li>Create variables for two numbers</li>
+                        <li>Perform different operations</li>
+                        <li>Display the results</li>
+                    </ol>
+                </div>
+            `,
+
+            'js-4': `
+                <h2>Conditional Statements</h2>
+                <p>Conditionals let your code make decisions based on conditions.</p>
+
+                <h3>if Statement</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-label">JavaScript</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>let age = 18;
+
+if (age >= 18) {
+    console.log("You are an adult");
+}</code></pre>
+                </div>
+
+                <h3>if...else Statement</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-label">JavaScript</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>let age = 16;
+
+if (age >= 18) {
+    console.log("You are an adult");
+} else {
+    console.log("You are a minor");
+}</code></pre>
+                </div>
+
+                <h3>if...else if...else</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-label">JavaScript</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>let score = 85;
+
+if (score >= 90) {
+    console.log("Grade: A");
+} else if (score >= 80) {
+    console.log("Grade: B");
+} else if (score >= 70) {
+    console.log("Grade: C");
+} else {
+    console.log("Grade: F");
+}</code></pre>
+                </div>
+
+                <div class="try-it">
+                    <div class="try-it-title">🎯 Exercise: Grade Calculator</div>
+                    <p>Create a grade calculator:</p>
+                    <ol>
+                        <li>Use if/else statements</li>
+                        <li>Display different messages based on score</li>
+                        <li>Show the result on the page</li>
+                    </ol>
+                </div>
+            `,
+
+            'js-5': `
+                <h2>Loops</h2>
+                <p>Loops repeat code multiple times. They're essential for working with collections of data.</p>
+
+                <h3>for Loop</h3>
+                <p>Use when you know how many times to loop:</p>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-label">JavaScript</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>for (let i = 1; i <= 5; i++) {
+    console.log("Count: " + i);
+}
+// Output: Count: 1, Count: 2, ... Count: 5</code></pre>
+                </div>
+
+                <h3>while Loop</h3>
+                <p>Use when you don't know how many iterations:</p>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-label">JavaScript</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>let count = 1;
+
+while (count <= 5) {
+    console.log("Count: " + count);
+    count++;
+}</code></pre>
+                </div>
+
+                <h3>Looping Through Arrays</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-label">JavaScript</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>let fruits = ["apple", "banana", "orange"];
+
+for (let i = 0; i < fruits.length; i++) {
+    console.log(fruits[i]);
+}</code></pre>
+                </div>
+
+                <div class="try-it">
+                    <div class="try-it-title">🎯 Exercise: Display a List</div>
+                    <p>Use loops to display data:</p>
+                    <ol>
+                        <li>Create an array of items</li>
+                        <li>Use a loop to iterate through them</li>
+                        <li>Display each item on the page</li>
+                    </ol>
+                </div>
+            `,
+
+            'js-6': `
+                <h2>Functions</h2>
+                <p>Functions are reusable blocks of code. They help organize your code and avoid repetition.</p>
+
+                <h3>Defining a Function</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-label">JavaScript</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>function greet() {
+    console.log("Hello!");
+}
+
+greet();  // Call the function</code></pre>
+                </div>
+
+                <h3>Functions with Parameters</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-label">JavaScript</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>function greet(name) {
+    console.log("Hello, " + name + "!");
+}
+
+greet("Alice");  // Output: Hello, Alice!
+greet("Bob");    // Output: Hello, Bob!</code></pre>
+                </div>
+
+                <h3>Return Values</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-label">JavaScript</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>function add(a, b) {
+    return a + b;
+}
+
+let result = add(5, 3);
+console.log(result);  // Output: 8</code></pre>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-box-title">💡 Why Use Functions?</div>
+                    <p>Functions make code reusable, organized, and easier to maintain. Instead of repeating code, call a function!</p>
+                </div>
+
+                <div class="try-it">
+                    <div class="try-it-title">🎯 Exercise: Create Utility Functions</div>
+                    <p>Build useful functions:</p>
+                    <ol>
+                        <li>Create a function to calculate area</li>
+                        <li>Create a function to check if a number is even</li>
+                        <li>Display the results</li>
+                    </ol>
+                    <p style="margin-top: 1rem;"><strong>🎉 Congratulations!</strong> You've completed the JavaScript Basics course!</p>
+                </div>
+            `
             };
 
             return lessons[id] || `
@@ -3103,7 +3087,8 @@ p {
             const htmlCompleted = lessons.html.filter(l => l.completed).length;
             const cssCompleted = lessons.css.filter(l => l.completed).length;
             const layoutCompleted = lessons.layout.filter(l => l.completed).length;
-            const totalCompleted = htmlCompleted + cssCompleted + layoutCompleted;
+            const jsCompleted = lessons.javascript.filter(l => l.completed).length;
+            const totalCompleted = htmlCompleted + cssCompleted + layoutCompleted + jsCompleted;
             const total = getTotalCount();
 
             document.getElementById('lessons-completed').textContent = totalCompleted;
@@ -3114,6 +3099,7 @@ p {
             updateCourseProgress('html', htmlCompleted, lessons.html.length);
             updateCourseProgress('css', cssCompleted, lessons.css.length);
             updateCourseProgress('layout', layoutCompleted, lessons.layout.length);
+            updateCourseProgress('javascript', jsCompleted, lessons.javascript.length);
         }
 
         function updateCourseProgress(unit, completed, total) {
@@ -3169,40 +3155,6 @@ p {
                     button.style.borderColor = 'var(--border)';
                 }, 2000);
             });
-        }
-
-        // Run code in interactive editor
-        function runCode(editorId) {
-            const input = document.getElementById(`editor-input-${editorId}`);
-            const output = document.getElementById(`editor-output-${editorId}`);
-            
-            if (!input || !output) return;
-            
-            const code = input.value;
-            
-            // Create HTML document with the user's code
-            const fullHTML = `
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <meta charset="UTF-8">
-                    <style>
-                        body {
-                            font-family: Arial, sans-serif;
-                            padding: 20px;
-                            margin: 0;
-                        }
-                    </style>
-                </head>
-                <body>
-                    ${code}
-                </body>
-                </html>
-            `;
-            
-            // Write to iframe
-            const iframe = output;
-            iframe.srcdoc = fullHTML;
         }
 
         // Initialize on load
