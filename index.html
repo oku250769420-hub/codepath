@@ -882,6 +882,100 @@
             font-size: 1.1rem;
         }
 
+        /* Interactive Code Editor */
+        .code-editor {
+            margin-top: 1.5rem;
+        }
+
+        .editor-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .editor-panel {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .editor-header {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .editor-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .run-btn {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .run-btn:hover {
+            background: var(--accent-secondary);
+            transform: translateY(-1px);
+        }
+
+        .code-input {
+            width: 100%;
+            min-height: 250px;
+            padding: 1rem;
+            background: var(--bg-primary);
+            border: none;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            resize: vertical;
+            outline: none;
+        }
+
+        .code-input:focus {
+            background: rgba(77, 208, 225, 0.05);
+        }
+
+        .code-output {
+            width: 100%;
+            height: 250px;
+            border: none;
+            background: white;
+        }
+
+        .output-placeholder {
+            padding: 1rem;
+            color: var(--text-muted);
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 250px;
+        }
+
+        @media (max-width: 968px) {
+            .editor-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
         .lesson-nav {
             display: flex;
             justify-content: space-between;
@@ -1608,13 +1702,33 @@
 
                     <div class="try-it">
                         <div class="try-it-title">🎯 Exercise: Create Your First HTML</div>
-                        <p>Open a text editor (Notepad, TextEdit, or VS Code) and create a file called <strong>index.html</strong>. Write HTML that includes:</p>
+                        <p>Write HTML that includes:</p>
                         <ol>
                             <li>A main heading with your name</li>
                             <li>A paragraph introducing yourself</li>
                             <li>Another paragraph with some <strong>bold</strong> and <em>italic</em> text</li>
                         </ol>
-                        <p>Save the file and open it in your web browser to see your first webpage!</p>
+                        
+                        <div class="code-editor">
+                            <div class="editor-container">
+                                <div class="editor-panel">
+                                    <div class="editor-header">
+                                        <span class="editor-label">HTML Code</span>
+                                        <button class="run-btn" onclick="runCode('html1')">Run Code</button>
+                                    </div>
+                                    <textarea id="editor-input-html1" class="code-input" placeholder="Write your HTML here..."><!-- Try this example -->
+<h1>My Name</h1>
+<p>This is my first paragraph.</p>
+<p>HTML is <strong>amazing</strong>!</p></textarea>
+                                </div>
+                                <div class="editor-panel">
+                                    <div class="editor-header">
+                                        <span class="editor-label">Preview</span>
+                                    </div>
+                                    <iframe id="editor-output-html1" class="code-output"></iframe>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 `,
 
@@ -1673,8 +1787,34 @@
                             <li>Add the &lt;html&gt;, &lt;head&gt;, and &lt;body&gt; elements</li>
                             <li>In the head: add a title "About Me"</li>
                             <li>In the body: add a heading and 2-3 paragraphs about yourself</li>
-                            <li>Save as "about.html" and open in your browser</li>
                         </ol>
+                        
+                        <div class="code-editor">
+                            <div class="editor-container">
+                                <div class="editor-panel">
+                                    <div class="editor-header">
+                                        <span class="editor-label">HTML Code</span>
+                                        <button class="run-btn" onclick="runCode('html2')">Run Code</button>
+                                    </div>
+                                    <textarea id="editor-input-html2" class="code-input" placeholder="Write your HTML here..."><!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>About Me</title>
+</head>
+<body>
+    <h1>About Me</h1>
+    <p>Write about yourself here.</p>
+</body>
+</html></textarea>
+                                </div>
+                                <div class="editor-panel">
+                                    <div class="editor-header">
+                                        <span class="editor-label">Preview</span>
+                                    </div>
+                                    <iframe id="editor-output-html2" class="code-output"></iframe>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 `,
 
@@ -1736,6 +1876,36 @@
                             <li>Create an unordered list of 3-5 items</li>
                             <li>Use &lt;strong&gt; and &lt;em&gt; to emphasize text</li>
                         </ol>
+                        
+                        <div class="code-editor">
+                            <div class="editor-container">
+                                <div class="editor-panel">
+                                    <div class="editor-header">
+                                        <span class="editor-label">HTML Code</span>
+                                        <button class="run-btn" onclick="runCode('html3')">Run Code</button>
+                                    </div>
+                                    <textarea id="editor-input-html3" class="code-input" placeholder="Write your HTML here..."><h1>My Favorite Hobbies</h1>
+
+<h2>Reading</h2>
+<p>I love reading <strong>science fiction</strong> books.</p>
+
+<h2>Coding</h2>
+<p>Building websites is <em>so much fun</em>!</p>
+
+<ul>
+    <li>HTML</li>
+    <li>CSS</li>
+    <li>JavaScript</li>
+</ul></textarea>
+                                </div>
+                                <div class="editor-panel">
+                                    <div class="editor-header">
+                                        <span class="editor-label">Preview</span>
+                                    </div>
+                                    <iframe id="editor-output-html3" class="code-output"></iframe>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 `,
 
@@ -1796,13 +1966,49 @@
 
                     <div class="try-it">
                         <div class="try-it-title">🎯 Exercise: Build a Multi-Page Site</div>
-                        <p>Create a simple website with multiple linked pages:</p>
+                        <p>Create links and navigation:</p>
                         <ol>
-                            <li>Create three HTML files: index.html, about.html, and contact.html</li>
-                            <li>Add a navigation menu on each page linking to all three</li>
-                            <li>Add an email link on the contact page</li>
+                            <li>Create a navigation menu with internal links</li>
+                            <li>Add an email link</li>
                             <li>Add external links to your favorite websites</li>
                         </ol>
+                        
+                        <div class="code-editor">
+                            <div class="editor-container">
+                                <div class="editor-panel">
+                                    <div class="editor-header">
+                                        <span class="editor-label">HTML Code</span>
+                                        <button class="run-btn" onclick="runCode('html4')">Run Code</button>
+                                    </div>
+                                    <textarea id="editor-input-html4" class="code-input" placeholder="Write your HTML here..."><nav>
+    <a href="#home">Home</a> |
+    <a href="#about">About</a> |
+    <a href="#contact">Contact</a>
+</nav>
+
+<h1 id="home">Welcome</h1>
+<p>This is the home section.</p>
+
+<h2 id="about">About Me</h2>
+<p>Learn more about me here.</p>
+
+<h2 id="contact">Contact</h2>
+<p>Email me at: <a href="mailto:hello@example.com">hello@example.com</a></p>
+
+<p>Visit my favorite sites:</p>
+<ul>
+    <li><a href="https://github.com" target="_blank">GitHub</a></li>
+    <li><a href="https://stackoverflow.com" target="_blank">Stack Overflow</a></li>
+</ul></textarea>
+                                </div>
+                                <div class="editor-panel">
+                                    <div class="editor-header">
+                                        <span class="editor-label">Preview</span>
+                                    </div>
+                                    <iframe id="editor-output-html4" class="code-output"></iframe>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 `,
 
@@ -1861,14 +2067,51 @@
 
                     <div class="try-it">
                         <div class="try-it-title">🎯 Exercise: Create a Photo Gallery</div>
-                        <p>Build a simple photo gallery page:</p>
+                        <p>Build a simple photo gallery:</p>
                         <ol>
-                            <li>Create "gallery.html"</li>
-                            <li>Add 4-6 images using https://picsum.photos/300/200</li>
+                            <li>Add 3-4 images using placeholder URLs</li>
                             <li>Use &lt;figure&gt; and &lt;figcaption&gt; for each</li>
-                            <li>Make 2-3 images clickable links</li>
                             <li>Write descriptive alt text for each image</li>
                         </ol>
+                        
+                        <div class="code-editor">
+                            <div class="editor-container">
+                                <div class="editor-panel">
+                                    <div class="editor-header">
+                                        <span class="editor-label">HTML Code</span>
+                                        <button class="run-btn" onclick="runCode('html5')">Run Code</button>
+                                    </div>
+                                    <textarea id="editor-input-html5" class="code-input" placeholder="Write your HTML here..."><h1>My Photo Gallery</h1>
+
+<figure>
+    <img src="https://picsum.photos/300/200?random=1" 
+         alt="Random landscape photo"
+         width="300">
+    <figcaption>Beautiful Landscape</figcaption>
+</figure>
+
+<figure>
+    <img src="https://picsum.photos/300/200?random=2" 
+         alt="Random nature photo"
+         width="300">
+    <figcaption>Nature Scene</figcaption>
+</figure>
+
+<figure>
+    <img src="https://picsum.photos/300/200?random=3" 
+         alt="Random architecture photo"
+         width="300">
+    <figcaption>Architecture</figcaption>
+</figure></textarea>
+                                </div>
+                                <div class="editor-panel">
+                                    <div class="editor-header">
+                                        <span class="editor-label">Preview</span>
+                                    </div>
+                                    <iframe id="editor-output-html5" class="code-output"></iframe>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 `,
 
@@ -1944,12 +2187,43 @@
                         <div class="try-it-title">🎯 Exercise: Style Your First Page</div>
                         <p>Let's put CSS into practice:</p>
                         <ol>
-                            <li>Create an HTML file with an h1, h2, and paragraphs</li>
-                            <li>Create "styles.css" and link it</li>
                             <li>Style the h1 with purple color and 48px font</li>
                             <li>Style paragraphs with 18px font and light gray background</li>
                             <li>Add 20px padding to paragraphs</li>
                         </ol>
+                        
+                        <div class="code-editor">
+                            <div class="editor-container">
+                                <div class="editor-panel">
+                                    <div class="editor-header">
+                                        <span class="editor-label">HTML & CSS Code</span>
+                                        <button class="run-btn" onclick="runCode('css1')">Run Code</button>
+                                    </div>
+                                    <textarea id="editor-input-css1" class="code-input" placeholder="Write your HTML and CSS here..."><style>
+h1 {
+    color: purple;
+    font-size: 48px;
+}
+
+p {
+    font-size: 18px;
+    background-color: lightgray;
+    padding: 20px;
+}
+</style>
+
+<h1>My Styled Page</h1>
+<p>This is a styled paragraph!</p>
+<p>CSS makes everything look better.</p></textarea>
+                                </div>
+                                <div class="editor-panel">
+                                    <div class="editor-header">
+                                        <span class="editor-label">Preview</span>
+                                    </div>
+                                    <iframe id="editor-output-css1" class="code-output"></iframe>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 `,
 
@@ -2024,11 +2298,55 @@
                         <p>Build a profile card using selectors:</p>
                         <ol>
                             <li>Create a div with class="card"</li>
-                            <li>Add an h2, paragraph with class="bio", and paragraph with class="contact"</li>
                             <li>Style .card with background, padding, and border</li>
                             <li>Style h2 inside .card differently</li>
                             <li>Style .bio with italic text</li>
                         </ol>
+                        
+                        <div class="code-editor">
+                            <div class="editor-container">
+                                <div class="editor-panel">
+                                    <div class="editor-header">
+                                        <span class="editor-label">HTML & CSS Code</span>
+                                        <button class="run-btn" onclick="runCode('css2')">Run Code</button>
+                                    </div>
+                                    <textarea id="editor-input-css2" class="code-input" placeholder="Write your HTML and CSS here..."><style>
+.card {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border: 2px solid #333;
+    border-radius: 10px;
+}
+
+.card h2 {
+    color: darkblue;
+    font-size: 28px;
+}
+
+.bio {
+    font-style: italic;
+}
+
+.contact {
+    color: gray;
+    font-size: 14px;
+}
+</style>
+
+<div class="card">
+    <h2>John Doe</h2>
+    <p class="bio">Web developer and designer</p>
+    <p class="contact">john@example.com</p>
+</div></textarea>
+                                </div>
+                                <div class="editor-panel">
+                                    <div class="editor-header">
+                                        <span class="editor-label">Preview</span>
+                                    </div>
+                                    <iframe id="editor-output-css2" class="code-output"></iframe>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 `,
 
@@ -2088,12 +2406,60 @@
                         <div class="try-it-title">🎯 Exercise: Create a Colorful Hero Section</div>
                         <p>Design a hero section with colors and backgrounds:</p>
                         <ol>
-                            <li>Create a div with class="hero"</li>
                             <li>Add a gradient background</li>
                             <li>Set height to 400px and center text</li>
                             <li>Make text white with good contrast</li>
-                            <li>Create a card with RGBA background transparency</li>
                         </ol>
+                        
+                        <div class="code-editor">
+                            <div class="editor-container">
+                                <div class="editor-panel">
+                                    <div class="editor-header">
+                                        <span class="editor-label">HTML & CSS Code</span>
+                                        <button class="run-btn" onclick="runCode('css3')">Run Code</button>
+                                    </div>
+                                    <textarea id="editor-input-css3" class="code-input" placeholder="Write your HTML and CSS here..."><style>
+.hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    padding: 40px;
+}
+
+.hero h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.card {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+</style>
+
+<div class="hero">
+    <h1>Welcome to My Site</h1>
+    <p>Beautiful gradients and colors!</p>
+    <div class="card">
+        <p>This card has transparency</p>
+    </div>
+</div></textarea>
+                                </div>
+                                <div class="editor-panel">
+                                    <div class="editor-header">
+                                        <span class="editor-label">Preview</span>
+                                    </div>
+                                    <iframe id="editor-output-css3" class="code-output"></iframe>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 `,
 
@@ -2164,13 +2530,62 @@
                         <div class="try-it-title">🎯 Exercise: Build a Card Component</div>
                         <p>Create a modern card using the box model:</p>
                         <ol>
-                            <li>Create a card div with width 300px</li>
-                            <li>Add 20px padding</li>
-                            <li>Add a 1px border with rounded corners</li>
-                            <li>Add 20px margin</li>
-                            <li>Add a subtle box-shadow</li>
-                            <li>Style a button inside with padding and borders</li>
+                            <li>Create a card with proper padding and borders</li>
+                            <li>Add rounded corners and box-shadow</li>
+                            <li>Style a button with padding and borders</li>
                         </ol>
+                        
+                        <div class="code-editor">
+                            <div class="editor-container">
+                                <div class="editor-panel">
+                                    <div class="editor-header">
+                                        <span class="editor-label">HTML & CSS Code</span>
+                                        <button class="run-btn" onclick="runCode('css4')">Run Code</button>
+                                    </div>
+                                    <textarea id="editor-input-css4" class="code-input" placeholder="Write your HTML and CSS here..."><style>
+* {
+    box-sizing: border-box;
+}
+
+.card {
+    width: 300px;
+    padding: 20px;
+    margin: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background: white;
+}
+
+.card h2 {
+    margin-top: 0;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+</style>
+
+<div class="card">
+    <h2>Card Title</h2>
+    <p>This is a card with proper spacing using the box model.</p>
+    <button class="btn">Click Me</button>
+</div></textarea>
+                                </div>
+                                <div class="editor-panel">
+                                    <div class="editor-header">
+                                        <span class="editor-label">Preview</span>
+                                    </div>
+                                    <iframe id="editor-output-css4" class="code-output"></iframe>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 `,
 
@@ -2250,11 +2665,75 @@
                         <div class="try-it-title">🎯 Exercise: Build a Responsive Layout</div>
                         <p>Create a responsive page using Flexbox:</p>
                         <ol>
-                            <li>Create a navigation bar with flexbox (space items apart)</li>
+                            <li>Create a navigation bar with flexbox</li>
                             <li>Create a hero section with centered text</li>
                             <li>Create 3 feature cards in a row with gap</li>
-                            <li>Add flex-wrap so cards wrap on smaller screens</li>
                         </ol>
+                        
+                        <div class="code-editor">
+                            <div class="editor-container">
+                                <div class="editor-panel">
+                                    <div class="editor-header">
+                                        <span class="editor-label">HTML & CSS Code</span>
+                                        <button class="run-btn" onclick="runCode('layout1')">Run Code</button>
+                                    </div>
+                                    <textarea id="editor-input-layout1" class="code-input" placeholder="Write your HTML and CSS here..."><style>
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #333;
+    color: white;
+    padding: 20px;
+}
+
+.hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+    background: #667eea;
+    color: white;
+}
+
+.cards {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    flex-wrap: wrap;
+}
+
+.card {
+    flex: 1 1 200px;
+    background: #f0f0f0;
+    padding: 20px;
+    border-radius: 8px;
+}
+</style>
+
+<div class="navbar">
+    <div>Logo</div>
+    <div>Menu</div>
+</div>
+
+<div class="hero">
+    <h1>Welcome!</h1>
+</div>
+
+<div class="cards">
+    <div class="card">Card 1</div>
+    <div class="card">Card 2</div>
+    <div class="card">Card 3</div>
+</div></textarea>
+                                </div>
+                                <div class="editor-panel">
+                                    <div class="editor-header">
+                                        <span class="editor-label">Preview</span>
+                                    </div>
+                                    <iframe id="editor-output-layout1" class="code-output"></iframe>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 `,
 
@@ -2330,12 +2809,60 @@
                         <div class="try-it-title">🎯 Exercise: Build a Dashboard</div>
                         <p>Create a dashboard using CSS Grid:</p>
                         <ol>
-                            <li>Use grid template areas for header, sidebar, content, footer</li>
-                            <li>Create a nested grid in content with 3 columns</li>
-                            <li>Make one card span 2 columns</li>
-                            <li>Make another card span 2 rows</li>
-                            <li>Add 20px gap between elements</li>
+                            <li>Use grid template areas for layout</li>
+                            <li>Create cards with different spanning</li>
+                            <li>Add gaps between elements</li>
                         </ol>
+                        
+                        <div class="code-editor">
+                            <div class="editor-container">
+                                <div class="editor-panel">
+                                    <div class="editor-header">
+                                        <span class="editor-label">HTML & CSS Code</span>
+                                        <button class="run-btn" onclick="runCode('layout2')">Run Code</button>
+                                    </div>
+                                    <textarea id="editor-input-layout2" class="code-input" placeholder="Write your HTML and CSS here..."><style>
+.container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
+
+.card {
+    background: #f0f0f0;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.card-wide {
+    grid-column: span 2;
+    background: lightblue;
+}
+
+.card-tall {
+    grid-row: span 2;
+    background: lightgreen;
+}
+</style>
+
+<div class="container">
+    <div class="card card-wide">Wide Card</div>
+    <div class="card">Card 1</div>
+    <div class="card card-tall">Tall Card</div>
+    <div class="card">Card 2</div>
+    <div class="card">Card 3</div>
+    <div class="card">Card 4</div>
+</div></textarea>
+                                </div>
+                                <div class="editor-panel">
+                                    <div class="editor-header">
+                                        <span class="editor-label">Preview</span>
+                                    </div>
+                                    <iframe id="editor-output-layout2" class="code-output"></iframe>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 `,
 
@@ -2423,13 +2950,88 @@
                         <div class="try-it-title">🎯 Final Project: Responsive Portfolio</div>
                         <p>Build a complete responsive website:</p>
                         <ol>
-                            <li><strong>Header:</strong> Vertical menu on mobile, horizontal on desktop</li>
-                            <li><strong>Hero:</strong> Full-width with responsive fonts</li>
-                            <li><strong>Projects Grid:</strong> 1 column mobile, 2 tablet, 3 desktop</li>
-                            <li><strong>About Section:</strong> Stacked mobile, side-by-side desktop</li>
-                            <li><strong>Footer:</strong> Responsive contact info</li>
+                            <li>Header with navigation</li>
+                            <li>Hero section with centered text</li>
+                            <li>Responsive card grid (1 column mobile, 3 desktop)</li>
                         </ol>
-                        <p><strong>🎉 Congratulations!</strong> You now have a solid foundation in HTML and CSS!</p>
+                        
+                        <div class="code-editor">
+                            <div class="editor-container">
+                                <div class="editor-panel">
+                                    <div class="editor-header">
+                                        <span class="editor-label">HTML & CSS Code</span>
+                                        <button class="run-btn" onclick="runCode('layout3')">Run Code</button>
+                                    </div>
+                                    <textarea id="editor-input-layout3" class="code-input" placeholder="Write your HTML and CSS here..."><style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.header {
+    background: #333;
+    color: white;
+    padding: 20px;
+}
+
+.hero {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.projects {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 20px;
+}
+
+.card {
+    background: #f0f0f0;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+@media (min-width: 768px) {
+    .projects {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .projects {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+</style>
+
+<div class="header">
+    <h2>My Portfolio</h2>
+</div>
+
+<div class="hero">
+    <h1>Welcome!</h1>
+    <p>Resize to see responsive design</p>
+</div>
+
+<div class="projects">
+    <div class="card">Project 1</div>
+    <div class="card">Project 2</div>
+    <div class="card">Project 3</div>
+</div></textarea>
+                                </div>
+                                <div class="editor-panel">
+                                    <div class="editor-header">
+                                        <span class="editor-label">Preview</span>
+                                    </div>
+                                    <iframe id="editor-output-layout3" class="code-output"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                        <p style="margin-top: 1rem;"><strong>🎉 Congratulations!</strong> You now have a solid foundation in HTML and CSS!</p>
                     </div>
                 `
             };
@@ -2567,6 +3169,40 @@
                     button.style.borderColor = 'var(--border)';
                 }, 2000);
             });
+        }
+
+        // Run code in interactive editor
+        function runCode(editorId) {
+            const input = document.getElementById(`editor-input-${editorId}`);
+            const output = document.getElementById(`editor-output-${editorId}`);
+            
+            if (!input || !output) return;
+            
+            const code = input.value;
+            
+            // Create HTML document with the user's code
+            const fullHTML = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                            padding: 20px;
+                            margin: 0;
+                        }
+                    </style>
+                </head>
+                <body>
+                    ${code}
+                </body>
+                </html>
+            `;
+            
+            // Write to iframe
+            const iframe = output;
+            iframe.srcdoc = fullHTML;
         }
 
         // Initialize on load
